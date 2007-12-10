@@ -42,11 +42,11 @@ function k = dd_largestPivot(A, r, c)
   maxElem = A(r, c);
 
   for i = r:rows(A)
-     elem = A(i, c);
-     if (elem > maxElem)
-       maxElem = elem;
-       k = i;
-     endif
+    elem = A(i, c);
+    if (elem > maxElem)
+      maxElem = elem;
+      k = i;
+    endif
   endfor
 endfunction
 
@@ -79,3 +79,42 @@ function A = dd_pivotRow(A, r, c)
   A(k, :) = temp;
 endfunction
 
+
+function M = dd_triangular(M)
+  if (nargin != 1)
+    usage("dd_triangular(M)");
+  endif
+
+  if (rows(M) != (columns(M) - 1))
+    error("The matrix A has to be rectangular.");
+  endif
+
+  for i = 1 : (columns(M) - 2)
+    M = dd_pivotRow(M, i, i);
+
+    for j = (i + 1) : rows(M)
+      M(j,:) = abs(M(j,:) - M(j,i)/M(i,i) * M(i,:));
+    endfor
+  endfor
+endfunction
+
+
+function dd_gauss(A, b, x)
+  if (nargin != 2)
+    usage("dd_triangular(A, b)");
+  endif
+
+  if (matrix_type(A) != "Positive Definite")
+    error("The matrix A has to be positive definite.");
+  endif
+
+  if (rows(b) != rows(A))
+    error("The vector b has to have the same dimension as rows in \
+	matrix A");
+  endif
+
+  if (!isvector(b))
+    error("b must be an array.");
+  endif
+
+endfunction
