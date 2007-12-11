@@ -10,9 +10,9 @@
 
 ## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
 ## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, gaussian eliminatin
+## Keywords: linear system, gaussian elimination, partial pivoting
 ## Created: 10.12.2007
-## Version: 0.1
+## Version: 1.0
 
 
 

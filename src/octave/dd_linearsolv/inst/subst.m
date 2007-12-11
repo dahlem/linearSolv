@@ -10,9 +10,9 @@
 
 ## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
 ## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, gaussian eliminatin
-## Created: 10.12.2007
-## Version: 0.1
+## Keywords: linear system, forward substitution, backward substitution
+## Created: 11.12.2007
+## Version: 1.0
 
 
 
