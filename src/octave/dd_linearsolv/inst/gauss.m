@@ -101,7 +101,7 @@ endfunction
 
 function [x_bar, x_error, max_error] = dd_gauss(A, b, x)
   if (nargin != 3)
-    usage("dd_triangular(A, b, x)");
+    usage("dd_gauss(A, b, x)");
   endif
 
   if (matrix_type(A) != "Positive Definite")
@@ -116,20 +116,10 @@ function [x_bar, x_error, max_error] = dd_gauss(A, b, x)
     error("b must be an array.");
   endif
 
-  A = [A, b];
-  A = dd_triangular(A);
+  M = [A, b];
+  M = dd_triangular(M);
 
-  x_bar = zeros(rows(A), 1);
-  
-  for i = rows(A):-1:1
-    x_temp = 0;
-    
-    for j = (i + 1) : (columns(A) - 1)
-      x_temp += A(i,j) * x_bar(j);
-    endfor
-
-    x_bar(i) = (A(i,columns(A)) - x_temp) / A(i,i);
-  endfor
+  [M, x_bar] = dd_backwards(M);
 
   x_error = x - x_bar;
   max_error = max(abs(x_error));
