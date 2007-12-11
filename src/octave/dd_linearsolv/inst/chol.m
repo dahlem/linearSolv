@@ -25,8 +25,8 @@ function L = dd_cholcrout(A)
     usage("dd_cholcrout(A)");
   endif
 
-  if (rows(A) != columns(A))
-    error("The matrix A has to be a square matrix.");
+  if (matrix_type(A) != "Positive Definite")
+    error("The matrix A has to be positive definite.");
   endif
 
   L = zeros(rows(A), columns(A));
