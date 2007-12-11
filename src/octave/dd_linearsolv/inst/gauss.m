@@ -99,9 +99,9 @@ function M = dd_triangular(M)
 endfunction
 
 
-function dd_gauss(A, b, x)
-  if (nargin != 2)
-    usage("dd_triangular(A, b)");
+function x_bar = dd_gauss(A, b, x)
+  if (nargin != 3)
+    usage("dd_triangular(A, b, x)");
   endif
 
   if (matrix_type(A) != "Positive Definite")
@@ -117,4 +117,19 @@ function dd_gauss(A, b, x)
     error("b must be an array.");
   endif
 
+  A = [A, b];
+  A = dd_triangular(A)
+
+  x_bar = zeros(rows(A), 1);
+  
+  for i = rows(A):-1:1
+    x_temp = 0;
+    
+    for j = (i + 1) : (columns(A) - 1)
+      x_temp += A(i,j) * x_bar(j);
+    endfor
+
+    x_bar(i) = (A(i,columns(A)) - x_temp) / A(i,i);
+  endfor
+  
 endfunction
