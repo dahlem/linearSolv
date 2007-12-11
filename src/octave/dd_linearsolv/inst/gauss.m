@@ -99,7 +99,7 @@ function M = dd_triangular(M)
 endfunction
 
 
-function x_bar = dd_gauss(A, b, x)
+function [x_bar, x_error, max_error] = dd_gauss(A, b, x)
   if (nargin != 3)
     usage("dd_triangular(A, b, x)");
   endif
@@ -109,8 +109,7 @@ function x_bar = dd_gauss(A, b, x)
   endif
 
   if (rows(b) != rows(A))
-    error("The vector b has to have the same dimension as rows in \
-	matrix A");
+    error("The vector b has to have the same dimension as rows in matrix A");
   endif
 
   if (!isvector(b))
@@ -118,7 +117,7 @@ function x_bar = dd_gauss(A, b, x)
   endif
 
   A = [A, b];
-  A = dd_triangular(A)
+  A = dd_triangular(A);
 
   x_bar = zeros(rows(A), 1);
   
@@ -131,5 +130,8 @@ function x_bar = dd_gauss(A, b, x)
 
     x_bar(i) = (A(i,columns(A)) - x_temp) / A(i,i);
   endfor
+
+  x_error = x - x_bar;
+  max_error = max(abs(x_error));
   
 endfunction
