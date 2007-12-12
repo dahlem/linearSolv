@@ -10,8 +10,8 @@
 
 ## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
 ## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, LU decomposition, Crout reduction
-## Created: 10.12.2007
+## Keywords: linear system, Cholesky decomposition, Cholesky-Crout reduction
+## Created: 11.12.2007
 ## Version: 1.0
 
 
