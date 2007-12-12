@@ -25,9 +25,9 @@ function [M, x_bar] = dd_backwards(M)
     usage("dd_backwards(M)");
   endif
 
-  if (matrix_type(M(:,1:columns(M) - 1)) != "Upper")
-    error("The matrix M has to be upper triangular.");
-  endif
+#  if (matrix_type(M(:,1:columns(M) - 1)) != "Upper")
+#    error("The matrix M has to be upper triangular.");
+#  endif
 
   x_bar = zeros(rows(M), 1);
   
@@ -49,9 +49,9 @@ function [M, x_bar] = dd_forwards(M)
     usage("dd_forwards(M)");
   endif
 
-  if (matrix_type(M(:,1:columns(M) - 1)) != "Lower")
-    error("The matrix M has to be lower triangular.");
-  endif
+#  if (matrix_type(M(:,1:columns(M) - 1)) != "Lower")
+#    error("The matrix M has to be lower triangular.");
+#  endif
 
   x_bar = zeros(rows(M), 1);
   
