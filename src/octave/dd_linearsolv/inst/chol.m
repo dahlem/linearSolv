@@ -51,3 +51,44 @@ function L = dd_cholcrout(A)
     endfor
   endfor
 endfunction
+
+
+function [x_bar, x_error, max_error] = dd_chol(A, b, x)
+  if (nargin != 3)
+    usage("dd_chol(A, b, x)");
+  endif
+
+  if (matrix_type(A) != "Positive Definite")
+    error("The matrix A has to be positive definite.");
+  endif
+
+  if (rows(b) != rows(A))
+    error("The vector b has to have the same dimension as rows in matrix A");
+  endif
+
+  if (!isvector(b))
+    error("b must be an array.");
+  endif
+
+  L = dd_cholcrout(A);
+  
+  ML = [L, b];
+  [ML, y_bar] = dd_forwards(ML);
+
+  MU = [L', y_bar];
+  [MU, x_bar] = dd_backwards(MU);
+  
+  x_error = x - x_bar;
+  max_error = max(abs(x_error));
+  
+endfunction
+
+#!test
+#! A = [1.86279, 0.47863, -0.54877; 0.47863, 1.61609, 0.10628; -0.54877,
+#!      0.10628, 2.76115]
+#! L = dd_cholcrout(A)
+#! assert(L * L', A, 0.001)
+#! b = [1;2;3]
+#! x = [1;1;1]
+#! [x_bar, x_error, max_error] = dd_chol(A, b, x)
+#! assert(A * x_bar, b, 0.001)
