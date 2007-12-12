@@ -25,7 +25,7 @@ function [L, U] = dd_crout(A)
     usage("dd_crout(A)");
   endif
 
-  if (rows(A) == columns(A))
+  if (rows(A) != columns(A))
     error("The matrix A has to be a square matrix.");
   endif
 
@@ -88,7 +88,7 @@ function [x_bar, x_error, max_error] = dd_lu(A, b, x)
   [ML, y_bar] = dd_forwards(ML);
 
   MU = [U, y_bar];
-  [MU, x_bar] = dd_forwards(MU);
+  [MU, x_bar] = dd_backwards(MU);
   
   x_error = x - x_bar;
   max_error = max(abs(x_error));
@@ -101,3 +101,9 @@ endfunction
 #! [L, U] = dd_crout(A);
 #! assert(L == [2, 0, 0, 0; 3, -0.5, 0, 0; 2, 2, 1, 0; 1, 1.5, 4, 141])
 #! assert(U == [1, 0.5, 1.5, 2; 0, 1, -1, 16; 0, 0, 1, -41; 0, 0, 0, 1])
+#! A = [1.86279, 0.47863, -0.54877; 0.47863, 1.61609, 0.10628; -0.54877,
+#!      0.10628, 2.76115]
+#! b = [1;2;3]
+#! x = [1;1;1]
+#! [x_bar, x_error, max_error] = dd_lu(A, b, x)
+#! assert(A * x_bar, b, 0.001)
