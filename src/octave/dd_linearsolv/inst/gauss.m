@@ -125,3 +125,11 @@ function [x_bar, x_error, max_error] = dd_gauss(A, b, x)
   max_error = max(abs(x_error));
   
 endfunction
+
+
+#! A = [1.86279, 0.47863, -0.54877; 0.47863, 1.61609, 0.10628; -0.54877,
+#!      0.10628, 2.76115]
+#! b = [1;2;3]
+#! x = [1;1;1]
+#! [x_bar, x_error, max_error] = dd_gauss(A, b, x)
+#! assert(A * x_bar, b, 0.001)
