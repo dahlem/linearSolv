@@ -40,7 +40,6 @@ function [x_bar, x_error, max_error] = dd_conjugate(A, b, x)
   x_bar = x;
   p = b - A * x_bar;
   r = p;
-  r_old = r;
   alpha = zeros(rows(A), 1);
   beta = zeros(rows(A), 1);
   k = 1;
@@ -49,10 +48,9 @@ function [x_bar, x_error, max_error] = dd_conjugate(A, b, x)
   while ((k <= rows(A)) || (dp > 1 * e^-12))
     alpha = dp / (dot(p, A * p));
     x_bar = x_bar + (alpha * p);
-    r = r_old - alpha * A * p;
-    beta = norm(r)^2 / norm(r_old)^2;
+    r = r - alpha * A * p;
+    beta = norm(r)^2 / dp;
     p = r + beta * p;
-    r_old = r;
     dp = norm(r)^2;
     k++;
   endwhile  
