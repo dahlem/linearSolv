@@ -57,34 +57,23 @@ function [x_bar, x_error, max_error] = dd_precondition(A, b, x)
   k = 1;
   n = rows(A);
   x_bar = x;
-  M1 = dd_jacobi_precondition(A);
-  A_bar = inv(M1) * A * inv(M1');
-  r = inv(M1) * (b - A * x_bar);
-  rho = r' * r;
-  rho_old = rho;
-  p = zeros(n);
-  q = zeros(n);
-  alpha = zeros(n);
-  beta = zeros(n);
-
-  while ((k <= n) && (rho > 1 * 10^-6))
-    if (k == 1)
-      p = r;
-    else
-      rho = r' * r;
-      beta = rho / rho_old;
-      rho_old = rho;
-      p = p + beta * p;
-    endif
-
-    q = A_bar * p;
-    alpha = rho / (p' * q);
-    x_bar = x_bar + alpha * p;
-    r = r - alpha * q;
+  r = b - A * x_bar;
+  M = dd_jacobi_precondition(A);
+  z = inv(M) * r;
+  d = z;
+  rho = (z' * r);
+  
+  while ((k <= n) && (rho > 1 * 10^-8))
+    alpha = rho / (d' * A * d);
+    x_bar = x_bar + alpha * d;
+    r = r - alpha * A * d;
+    z = inv(M) * r;
+    beta = (z' * r) / rho;
+    rho = (z' * r);
+    d = z + beta * d;
     k++;
   endwhile  
 
-  x_bar = inv(M1') * x_bar;
   x_error = x - x_bar;
   max_error = max(abs(x_error));
   
