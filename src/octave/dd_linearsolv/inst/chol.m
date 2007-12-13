@@ -15,10 +15,7 @@
 ## Version: 1.0
 
 
-
-
 1;
-
 
 function L = dd_cholcrout(A)
   if (nargin != 1)

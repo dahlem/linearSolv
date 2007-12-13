@@ -1,0 +1,7 @@
+linearsolv >> LinearSolvers
+Gaussian Elimination with Scaling and pivoting
+ dd_largestPivot
+ dd_pivortRow
+ dd_triangular
+ dd_gauss
+

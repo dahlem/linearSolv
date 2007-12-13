@@ -8,34 +8,6 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, Conjugate Gradient
-## Created: 12.12.2007
-## Version: 1.0
-
-
-
-
-1;
-
-
-function M1 = dd_jacobi_precondition(A)
-  if (nargin != 1)
-    usage("dd_jacobi_precondition(A)");
-  endif
-
-  if (rows(A) != columns(A))
-    error("The matrix A has to be a square matrix.");
-  endif
-
-  M1 = zeros(rows(A));
-  
-  for i = 1:rows(A)
-    M1(i, i) = sqrt(A(i, i));
-  endfor
-endfunction
-
 
 function [x_bar, x_error, max_error] = dd_precondition(A, b, x)
   if (nargin != 3)
@@ -79,7 +51,25 @@ function [x_bar, x_error, max_error] = dd_precondition(A, b, x)
   
 endfunction
 
-#!test
+
+function M1 = dd_jacobi_precondition(A)
+  if (nargin != 1)
+    usage("dd_jacobi_precondition(A)");
+  endif
+
+  if (rows(A) != columns(A))
+    error("The matrix A has to be a square matrix.");
+  endif
+
+  M1 = zeros(rows(A));
+  
+  for i = 1:rows(A)
+    M1(i, i) = sqrt(A(i, i));
+  endfor
+endfunction
+
+
+#!test precondition
 #! A = [1.86279, 0.47863, -0.54877; 0.47863, 1.61609, 0.10628; -0.54877,
 #!      0.10628, 2.76115]
 #! b = [1;2;3]

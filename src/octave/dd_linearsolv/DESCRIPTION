@@ -1,0 +1,12 @@
+Name: Linear System Solvers
+Version: 1.0
+Date: 2007-12-12
+Author: Dominik Dahlem
+Maintainer: Dominik Dahlem
+Title: Linear System Solvers.
+Description: Solving linear systems using a variety of techniques such
+as direct and iterative methods.
+Depends: octave (> 2.9.14)
+Autoload: yes
+License: as is
+Url: http://octave.sf.net

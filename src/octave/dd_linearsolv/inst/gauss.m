@@ -8,16 +8,50 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, gaussian elimination, partial pivoting
-## Created: 10.12.2007
-## Version: 1.0
+## -*- texinfo -*-
+## @deftypefn{Function File} {[@var{x_bar}, @var{x_error}, @var{max_error}] = }
+##     dd_gauss (@var{A}, @var{b}, @var{x})
+## @cindex gaussian elimination, Direct Method, Scaling, Pivoting
+##
+## The gaussian elimination method uses partial (row) pivoting and
+## scaling. The given matrix has to be positive definite.
+##
+## @var{A} is the matrix to be solved with the solution vector @var{b}
+## and a given x vector @var{x}.
+## @var{x_bar} is the solution as established by backwards substitution
+## after the matrix is in upper triangular form.
+##
+## @seealso{dd_seidel}
+## @end deftypefn
 
 
+function [x_bar, x_error, max_error] = dd_gauss(A, b, x)
+  if (nargin != 3)
+    usage("dd_gauss(A, b, x)");
+  endif
 
+  if (matrix_type(A) != "Positive Definite")
+    error("The matrix A has to be positive definite.");
+  endif
 
-1;
+  if (rows(b) != rows(A))
+    error("The vector b has to have the same dimension as rows in matrix A");
+  endif
+
+  if (!isvector(b))
+    error("b must be an array.");
+  endif
+
+  M = [A, b];
+  M = dd_triangular(M);
+
+  [M, x_bar] = dd_backwards(M);
+
+  x_error = x - x_bar;
+  max_error = max(abs(x_error));
+  
+endfunction
+
 
 function k = dd_largestPivot(A, r, c)
   if (nargin != 3)
@@ -98,33 +132,6 @@ function M = dd_triangular(M)
   endfor
 endfunction
 
-
-function [x_bar, x_error, max_error] = dd_gauss(A, b, x)
-  if (nargin != 3)
-    usage("dd_gauss(A, b, x)");
-  endif
-
-  if (matrix_type(A) != "Positive Definite")
-    error("The matrix A has to be positive definite.");
-  endif
-
-  if (rows(b) != rows(A))
-    error("The vector b has to have the same dimension as rows in matrix A");
-  endif
-
-  if (!isvector(b))
-    error("b must be an array.");
-  endif
-
-  M = [A, b];
-  M = dd_triangular(M);
-
-  [M, x_bar] = dd_backwards(M);
-
-  x_error = x - x_bar;
-  max_error = max(abs(x_error));
-  
-endfunction
 
 
 #! A = [1.86279, 0.47863, -0.54877; 0.47863, 1.61609, 0.10628; -0.54877,
