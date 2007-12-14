@@ -8,16 +8,17 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, Gauss-Seidel Iteration
-## Created: 12.12.2007
-## Version: 1.0
-
-
-
-
-1;
+## -*- texinfo -*-
+## @deftypefn{Function File} {[@var{x_bar}, @var{x_error}, @var{max_error}] = }
+##     dd_seidel (@var{A}, @var{b}, @var{x})
+## @cindex gauss-seidel method, Iterative Method
+##
+## @var{A} is the matrix to be solved with the solution vector @var{b}
+## and a given x vector @var{x}.
+## @var{x_bar} is the solution.
+##
+## @seealso{dd_gauss}
+## @end deftypefn
 
 
 function [x_bar, x_error, max_error] = dd_seidel(A, b, x)

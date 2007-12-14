@@ -8,13 +8,25 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, forward substitution, backward substitution
-## Created: 11.12.2007
-## Version: 1.0
-
-
+## -*- texinfo -*-
+## @deftypefn{Loadable Function File} {[@var{M}, @var{x_bar}] = }
+##     dd_backwards (@var{M})
+## @cindex Backwards Substitution
+##
+## @var{M} is the combined matrix A and the solution vector b in upper
+## triangular form.
+## @var{M} and @var{x_bar} carry the solution.
+## @end deftypefn
+##
+## @deftypefnx{Loadable Function File} {[@var{M}, @var{x_bar}] = }
+##     dd_forwards (@var{M})
+## @cindex Forwards Substitution
+##
+## @var{M} is the combined matrix A and the solution vector b in upper
+## triangular form.
+## @var{M} and @var{x_bar} carry the solution.
+##
+## @end deftypefnx
 
 
 1;

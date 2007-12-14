@@ -8,6 +8,19 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+## -*- texinfo -*-
+## @deftypefn{Function File} {[@var{x_bar}, @var{x_error}, @var{max_error}] = }
+##     dd_precondition (@var{A}, @var{b}, @var{x})
+## @cindex Conjugate Gradient, Iterative Method, Preconditioning, Jacobi
+## Preconditioning
+##
+## @var{A} is the matrix to be solved with the solution vector @var{b}
+## and a given x vector @var{x}.
+## @var{x_bar} carries the solution.
+##
+## @seealso{dd_seidel}
+## @end deftypefn
+
 
 function [x_bar, x_error, max_error] = dd_precondition(A, b, x)
   if (nargin != 3)

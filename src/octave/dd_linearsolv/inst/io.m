@@ -8,13 +8,26 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: matrix file i/o
-## Created: 07.12.2007
-## Version: 0.1
-
-
+## -*- texinfo -*-
+## @deftypefn{Loadable Function File} {[@var{A}, @var{v}] = }
+##     dd_read (@var{filename}, @var{format} = "-text")
+## @cindex File I/O
+##
+## @var{filename} is the name of the file with the matrix and vector
+## specification.
+## @var{A} and @var{v} are the in-memory representations of the file
+## specification.
+## @end deftypefn
+##
+## @deftypefnx{Loadable Function File} 
+##     dd_write (@var{filename}, @var{A}, @var{v}, @var{format} =
+##     "-text")
+## @cindex File I/O
+##
+## @var{filename} is the name of the file to store the matrix @var{A}
+## and the vector @var{v}.
+##
+## @end deftypefnx
 
 
 1;

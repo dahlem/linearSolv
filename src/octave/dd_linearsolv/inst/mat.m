@@ -8,16 +8,33 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: matrix symmetric positive-definite
-## Created: 07.12.2007
-## Version: 0.1
+## -*- texinfo -*-
+## @deftypefn{Function File} {[@var{A}, @var{b}] = }
+##     dd_linsolv (@var{N}, @var{scale} = 1)
+## @cindex Solv a linear system with @var{N} x @var{N} dimensions.
+##
+## A symmetric positive definite matrix is generated at random and
+## solved with a given x-vector = {-1.0, ..., -1.0}. The solution is
+## given in the generated SPD matrix @var{A} and the solution vector
+## @var{b}.
+##
+## @end deftypefn
 
 
+function [A, b] = dd_linsolv(N, scale = 1)
+  if ((nargin < 1) || (nargin > 2))
+    usage("dd_linsolv(N > 1, scale)");
+  elseif (N < 2)
+    error("The dimension of the matrix has to be larger than 1.");
+  endif
 
+  A = dd_rndSPD(N, scale);
+  x = ones(N, 1);
+  x = x * (-1);
+  b = A * x;
 
-1;
+endfunction
+
 
 function rnd = dd_rnd
   rnd = -1 + 2 * rand();
@@ -50,21 +67,6 @@ function A = dd_rndSPD(N, scale = 1)
     A(i,i) = abs_row_sum + scale * rand();
   endfor
   
-endfunction
-
-
-function [A, b] = dd_linsolv(N, scale = 1)
-  if ((nargin < 1) || (nargin > 2))
-    usage("dd_linsolv(N > 1, scale)");
-  elseif (N < 2)
-    error("The dimension of the matrix has to be larger than 1.");
-  endif
-
-  A = dd_rndSPD(N, scale);
-  x = ones(N, 1);
-  x = x * (-1);
-  b = A * x;
-
 endfunction
 
 

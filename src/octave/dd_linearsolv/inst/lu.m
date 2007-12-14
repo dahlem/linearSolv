@@ -8,16 +8,47 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, LU decomposition, Crout reduction
-## Created: 10.12.2007
-## Version: 1.0
+## -*- texinfo -*-
+## @deftypefn{Function File} {[@var{x_bar}, @var{x_error}, @var{max_error}] = }
+##     dd_lu (@var{A}, @var{b}, @var{x})
+## @cindex LU Decomposition, Crout Reduction
+##
+## @var{A} is the matrix to be solved with the solution vector @var{b}
+## and a given x vector @var{x}.
+## @var{x_bar} carries the solution.
+##
+## @end deftypefn
 
 
+function [x_bar, x_error, max_error] = dd_lu(A, b, x)
+  if (nargin != 3)
+    usage("dd_lu(A, b, x)");
+  endif
 
+  if (matrix_type(A) != "Positive Definite")
+    error("The matrix A has to be positive definite.");
+  endif
 
-1;
+  if (rows(b) != rows(A))
+    error("The vector b has to have the same dimension as rows in matrix A");
+  endif
+
+  if (!isvector(b))
+    error("b must be an array.");
+  endif
+
+  [L, U] = dd_crout(A);
+  
+  ML = [L, b];
+  [ML, y_bar] = dd_forwards(ML);
+
+  MU = [U, y_bar];
+  [MU, x_bar] = dd_backwards(MU);
+  
+  x_error = x - x_bar;
+  max_error = max(abs(x_error));
+  
+endfunction
 
 
 function [L, U] = dd_crout(A)
@@ -62,37 +93,6 @@ function [L, U] = dd_crout(A)
       endif
     endfor
   endfor
-endfunction
-
-
-function [x_bar, x_error, max_error] = dd_lu(A, b, x)
-  if (nargin != 3)
-    usage("dd_lu(A, b, x)");
-  endif
-
-  if (matrix_type(A) != "Positive Definite")
-    error("The matrix A has to be positive definite.");
-  endif
-
-  if (rows(b) != rows(A))
-    error("The vector b has to have the same dimension as rows in matrix A");
-  endif
-
-  if (!isvector(b))
-    error("b must be an array.");
-  endif
-
-  [L, U] = dd_crout(A);
-  
-  ML = [L, b];
-  [ML, y_bar] = dd_forwards(ML);
-
-  MU = [U, y_bar];
-  [MU, x_bar] = dd_backwards(MU);
-  
-  x_error = x - x_bar;
-  max_error = max(abs(x_error));
-  
 endfunction
 
 

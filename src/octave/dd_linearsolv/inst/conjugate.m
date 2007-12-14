@@ -8,16 +8,16 @@
 ## WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 ## implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-## Author: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Maintainer: Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
-## Keywords: linear system, Conjugate Gradient
-## Created: 12.12.2007
-## Version: 1.0
-
-
-
-
-1;
+## -*- texinfo -*-
+## @deftypefn{Function File} {[@var{x_bar}, @var{x_error}, @var{max_error}] = }
+##     dd_conjugate (@var{A}, @var{b}, @var{x})
+## @cindex Conjugate Gradient, Iterative Method
+##
+## @var{A} is the matrix to be solved with the solution vector @var{b}
+## and a given x vector @var{x}.
+## @var{x_bar} carries the solution.
+##
+## @end deftypefn
 
 
 function [x_bar, x_error, max_error] = dd_conjugate(A, b, x)
