@@ -40,6 +40,8 @@ void testWriteVector()
     
     CU_ASSERT_EQUAL(write(temp_file, NULL, &vec), 0);
     CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), ILLEGAL_FORMAT);
+
+    freeV(&vec);
 }
 
 
@@ -64,6 +66,9 @@ void testWriteBoth()
     CU_ASSERT_EQUAL(vec_read.size, vec.size);
     CU_ASSERT_EQUAL(mat_read.r, mat.r);
     CU_ASSERT_EQUAL(mat_read.c, mat.c);
+
+    freeV(&vec);
+    freeM(&mat);
 }
 
 
@@ -82,4 +87,6 @@ void testWriteMatrix()
 
     CU_ASSERT_EQUAL(write(temp_file, &mat, NULL), 0);
     CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), ILLEGAL_FORMAT);
+
+    freeM(&mat);
 }
