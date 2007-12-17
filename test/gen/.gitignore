@@ -1,0 +1,9 @@
+/Makefile
+/Makefile.in
+/gen_test
+/gen_test-gen_suite.gcda
+/gen_test-gen_suite.gcno
+/gen_test-gen_suite.o
+/gen_test-gen_test.gcda
+/gen_test-gen_test.gcno
+/gen_test-gen_test.o

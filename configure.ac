@@ -100,6 +100,7 @@ AC_CONFIG_FILES([
    src/c/io/Makefile
    test/Makefile
    test/common/Makefile
+   test/gen/Makefile
    test/io/Makefile
 ])
 
