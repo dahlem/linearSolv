@@ -40,6 +40,8 @@ typedef struct
 
 void initM(matrix_t *mat);
 void initV(vector_t *vec);
+void freeM(matrix_t *mat);
+void freeV(vector_t *vec);
 
 
 #endif
