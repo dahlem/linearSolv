@@ -19,10 +19,14 @@ void registerTests();
 
 
 void testRandSPD();
+void testNotSymmetric();
+void testZeroScale();
 
 
 static CU_TestInfo test_global[] = {
     { "testRandSPD", testRandSPD },
+    { "testNotSymmetric", testNotSymmetric },
+    { "testZeroScale", testZeroScale },
     CU_TEST_INFO_NULL,
 };
 

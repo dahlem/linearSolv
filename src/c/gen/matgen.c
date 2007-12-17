@@ -33,7 +33,7 @@ int randSPD(const gsl_rng *const rng, const double scale, matrix_t *mat)
     double abs_value;
     
     
-    if ((mat->r < 2) && (mat->c < 2) && (mat->c != mat->r)) {
+    if (((mat->r < 2) && (mat->c < 2)) || (mat->c != mat->r)) {
         return MATRIX_NOT_SYMMETRIC;
     }
     if (scale == 0) {
