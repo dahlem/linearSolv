@@ -11,22 +11,24 @@
 # Rules for the test code (use `make check` to execute)
 include $(top_srcdir)/mk/gcov.am
 
-TESTS = globals_test
+TESTS = io_test
 check_PROGRAMS = $(TESTS)
 
-globals_test_SOURCES =                                               \
-	common_suite.c                                               \
-	globals_test.c
+io_test_SOURCES =                                                    \
+	io_suite.c                                                   \
+	io_test.c
 
 
-globals_test_CPPFLAGS =                                              \
+io_test_CPPFLAGS =                                                   \
 	-I./includes                                                 \
+	-I$(top_srcdir)/src/c/io/includes                            \
 	-I$(top_srcdir)/src/c/common/includes
 
 
 LDADD =                                                              \
 	-lcunit                                                      \
 	-lm                                                          \
+	$(top_srcdir)/src/c/io/libmatio.la                           \
 	$(top_srcdir)/src/c/common/libglobals.la
 
 

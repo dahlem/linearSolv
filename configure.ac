@@ -18,6 +18,9 @@ AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
 
+# extra autoconf macros
+AC_CONFIG_MACRO_DIR([m4])
+
 AM_INIT_AUTOMAKE([foreign])
 
 
@@ -67,6 +70,9 @@ fi
 AM_CONDITIONAL(HAVE_CUNIT, test "x$HAVE_CUNIT" = xyes)
 
 
+# optional libraries
+AC_GCOV
+
 
 DX_DOXYGEN_FEATURE([ON])
 DX_HTML_FEATURE([ON])
@@ -88,6 +94,7 @@ AC_CONFIG_FILES([
    src/c/io/Makefile
    test/Makefile
    test/common/Makefile
+   test/io/Makefile
 ])
 
 

@@ -7,7 +7,7 @@
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I m4 -I /usr/share/aclocal
 
 include mk/doxygen.am
 
@@ -25,8 +25,39 @@ MOSTLYCLEANFILES = ${DX_CLEANFILES}
 dist_doc_DATA =                                             \
 	doc
 
+EXTRA_DIST = \
+	$(srcdir)/m4/ac_gcov.m4 \
+	$(srcdir)/m4/ax_prog_doxygen.m4 \
+	$(srcdir)/mk/gcov.am \
+	$(srcdir)/mk/gcov-recursive.am \
+	$(srcdir)/mk/doxygen.am
+
 clean-local:
 	rm -rf doc/doxygen/html
 
 dist-hook:
 	rm -rf `find $(distdir)/doc -name .gitignore`
+
+
+if GCOV
+
+COVOUT=./coverage
+LCOVOUT=$(COVOUT)/lcov-reports
+GENHTMLOUT=$(LCOVOUT)/html
+
+lcov-prepare:
+	rm -rf $(COVOUT)
+	mkdir -p $(GENHTMLOUT)
+	lcov --zerocounters --directory . --quiet
+
+lcov: clean lcov-prepare all
+	cd test && $(MAKE) $(AM_MAKEFLAGS) lcov
+
+else
+lcov: ;
+
+endif
+
+
+
+.PHONY: lcov lcov-prepare doxygen-run doxygen-doc $(DX_PS_GOAL) $(DX_PDF_GOAL)
