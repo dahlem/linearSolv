@@ -38,6 +38,8 @@ void testInitVector()
     for (i = 0; i < vec.size; ++i) {
         CU_ASSERT_DOUBLE_EQUAL(vec.vector[i], 0.0, 0.0001);
     }
+
+    freeV(&vec);
 }
 
 
@@ -58,4 +60,6 @@ void testInitMatrix()
             CU_ASSERT_DOUBLE_EQUAL(mat.matrix[i][j], 0.0, 0.0001);
         }
     }
+
+    freeM(&mat);
 }
