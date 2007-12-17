@@ -7,9 +7,12 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
+#include <CUnit/CUnit.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "globals.h"
 #include "globals_test.h"
 
 
@@ -24,4 +27,35 @@ void registerTests()
 
 void testInitVector()
 {
+    int i = 0;
+    vector_t vec;
+    vec.size = 2;
+
+    initV(&vec);
+
+    CU_ASSERT_PTR_NOT_NULL(vec.vector);
+    
+    for (i = 0; i < vec.size; ++i) {
+        CU_ASSERT_DOUBLE_EQUAL(vec.vector[i], 0.0, 0.0001);
+    }
+}
+
+
+void testInitMatrix()
+{
+    int i,j = 0;
+    matrix_t mat;
+    mat.r = 2;
+    mat.c = 3;
+
+    initM(&mat);
+
+    CU_ASSERT_PTR_NOT_NULL(mat.matrix);
+    CU_ASSERT_PTR_NOT_NULL(mat._block);
+    
+    for (i = 0; i < mat.r; ++i) {
+        for (j = 0; j < mat.c; ++j) {
+            CU_ASSERT_DOUBLE_EQUAL(mat.matrix[i][j], 0.0, 0.0001);
+        }
+    }
 }

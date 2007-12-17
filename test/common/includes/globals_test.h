@@ -20,10 +20,12 @@ void registerTests();
 
 
 void testInitVector();
+void testInitMatrix();
 
 
 static CU_TestInfo test_global[] = {
     { "testInitVector", testInitVector },
+    { "testInitMatrix", testInitMatrix },
     CU_TEST_INFO_NULL,
 };
 
