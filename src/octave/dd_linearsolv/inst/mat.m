@@ -57,9 +57,9 @@ function A = dd_rndSPD(N, scale = 1)
     endfor
   endfor
 
-  abs_row_sum = 0;
-
   for i = 1:N
+    abs_row_sum = 0;
+
     for j = 1:N
       abs_row_sum += abs(A(i,j));
     endfor

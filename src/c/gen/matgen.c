@@ -50,11 +50,11 @@ int randSPD(const gsl_rng *const rng, const double scale, matrix_t *mat)
     for (i = 0; i < mat->r; ++i) {
         abs_value = 0.0;
         
-        for (j = i+1; j < mat->c; ++j) {
+        for (j = 0; j < mat->c; ++j) {
             abs_value += abs(mat->matrix[i][j]);
         }
 
-        mat->matrix[i][i] = abs_value + scale * getRNG(rng);
+        mat->matrix[i][i] = abs_value + scale * gsl_rng_uniform(rng);
     }
 
     return 0;
