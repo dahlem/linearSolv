@@ -17,7 +17,6 @@ libmatgen_la_CPPFLAGS = -I./includes                                 \
 	-I$(top_srcdir)/src/c/common/includes
 
 LDADD =                                                              \
-	-lm                                                          \
 	$(top_srcdir)/src/c/common/libglobals.la
 
 

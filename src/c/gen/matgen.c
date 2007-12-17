@@ -8,7 +8,6 @@
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 #include <gsl/gsl_rng.h>
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
