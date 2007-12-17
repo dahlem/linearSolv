@@ -52,6 +52,11 @@ AC_FUNC_ERROR_AT_LINE
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([memset])
 
+# GSL library checks
+AC_CHECK_LIB([m],[cos])
+AC_CHECK_LIB([gslcblas],[cblas_dgemm])
+AC_CHECK_LIB([gsl],[gsl_blas_dgemm])
+
 
 # enable cunit?
 AC_ARG_ENABLE(test, AS_HELP_STRING(
@@ -91,6 +96,7 @@ AC_CONFIG_FILES([
    src/Makefile
    src/c/Makefile
    src/c/common/Makefile
+   src/c/gen/Makefile
    src/c/io/Makefile
    test/Makefile
    test/common/Makefile
