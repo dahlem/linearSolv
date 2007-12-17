@@ -16,7 +16,9 @@ libmatio_la_SOURCES =                                                \
 libmatio_la_CPPFLAGS = -I./includes                                  \
 	-I$(top_srcdir)/src/c/common/includes
 
+LDADD =                                                              \
+	$(top_srcdir)/src/c/common/libglobals.la
+
+
 include_HEADERS = includes
-
-
 MAINTAINERCLEANFILES = Makefile.in
