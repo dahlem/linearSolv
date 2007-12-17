@@ -8,5 +8,18 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+noinst_LTLIBRARIES = libmatgen.la
 
-SUBDIRS = common io gen
+libmatgen_la_SOURCES =                                               \
+	matgen.c
+
+libmatgen_la_CPPFLAGS = -I./includes                                 \
+	-I$(top_srcdir)/src/c/common/includes
+
+LDADD =                                                              \
+	-lm                                                          \
+	$(top_srcdir)/src/c/common/libglobals.la
+
+
+include_HEADERS = includes
+MAINTAINERCLEANFILES = Makefile.in
