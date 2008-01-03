@@ -21,17 +21,19 @@ void registerTests();
 void testRandSPD();
 void testNotSymmetric();
 void testZeroScale();
+void testTooSmall();
 
 
-static CU_TestInfo test_global[] = {
-    { "testRandSPD", testRandSPD },
+static CU_TestInfo test_gen[] = {
     { "testNotSymmetric", testNotSymmetric },
     { "testZeroScale", testZeroScale },
+    { "testTooSmall", testTooSmall },
+    { "testRandSPD", testRandSPD },
     CU_TEST_INFO_NULL,
 };
 
 static CU_SuiteInfo suites[] = {
-    { "TestGen", NULL, NULL, test_global },
+    { "TestGen", NULL, NULL, test_gen },
     CU_SUITE_INFO_NULL,
 };
 

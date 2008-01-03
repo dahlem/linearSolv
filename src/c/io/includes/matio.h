@@ -11,7 +11,8 @@
 #ifndef __MATIO_H__
 #define __MATIO_H__
 
-#include "globals.h"
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_matrix.h>
 
 
 
@@ -30,8 +31,8 @@
 #define COL_SPEC "columns:"
 
 
-int read(const char *filename, matrix_t *mat, vector_t *vec);
-int write(const char *filename, matrix_t *mat, vector_t *vec);
+int read(const char * const filename, gsl_matrix **mat, gsl_vector **vec);
+int write(const char * const filename, gsl_matrix *mat, gsl_vector *vec);
 
 
 #endif

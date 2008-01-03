@@ -21,15 +21,13 @@ io_test_SOURCES =                                                    \
 
 io_test_CPPFLAGS =                                                   \
 	-I./includes                                                 \
-	-I$(top_srcdir)/src/c/io/includes                            \
-	-I$(top_srcdir)/src/c/common/includes
+	-I$(top_srcdir)/src/c/io/includes
 
 
 LDADD =                                                              \
 	-lcunit                                                      \
 	-lm                                                          \
-	$(top_srcdir)/src/c/io/libmatio.la                           \
-	$(top_srcdir)/src/c/common/libglobals.la
+	$(top_srcdir)/src/c/io/libmatio.la
 
 
 include_HEADERS = includes

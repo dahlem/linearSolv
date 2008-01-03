@@ -13,11 +13,8 @@ noinst_LTLIBRARIES = libmatgen.la
 libmatgen_la_SOURCES =                                               \
 	matgen.c
 
-libmatgen_la_CPPFLAGS = -I./includes                                 \
-	-I$(top_srcdir)/src/c/common/includes
+libmatgen_la_CPPFLAGS = -I./includes
 
-LDADD =                                                              \
-	$(top_srcdir)/src/c/common/libglobals.la
 
 
 include_HEADERS = includes

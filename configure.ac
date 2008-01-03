@@ -95,11 +95,9 @@ AC_CONFIG_FILES([
    Makefile
    src/Makefile
    src/c/Makefile
-   src/c/common/Makefile
    src/c/gen/Makefile
    src/c/io/Makefile
    test/Makefile
-   test/common/Makefile
    test/gen/Makefile
    test/io/Makefile
 ])

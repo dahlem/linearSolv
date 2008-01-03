@@ -25,9 +25,9 @@ void testWriteMatrix();
 
 
 static CU_TestInfo test_io[] = {
-    { "testInitVector", testWriteVector },
-    { "testInitMatrix", testWriteMatrix },
-    { "testInitBoth", testWriteBoth },
+    { "testWriteVector", testWriteVector },
+    { "testWriteMatrix", testWriteMatrix },
+    { "testWriteBoth", testWriteBoth },
     CU_TEST_INFO_NULL,
 };
 

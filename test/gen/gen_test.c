@@ -7,15 +7,13 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
-#include <CUnit/CUnit.h>
-
-#include <gsl/gsl_rng.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "globals.h"
-#include "matgen.h"
+#include <CUnit/CUnit.h>
+#include <gsl/gsl_rng.h>
 
+#include "matgen.h"
 #include "gen_test.h"
 
 
@@ -30,71 +28,82 @@ void registerTests()
 void testRandSPD()
 {
     const gsl_rng_type *rng_type = gsl_rng_mt19937;
-    matrix_t mat;
-    int i, j;
+    gsl_matrix *mat;
+    gsl_rng *rng;
+    size_t i, j;
     double abs_value;
 
-    mat.r = 100;
-    mat.c = mat.r;
-
-    initM(&mat);
+    mat = gsl_matrix_calloc(10, 10);
 
     gsl_rng_env_setup();
-    gsl_rng *rng = gsl_rng_alloc(rng_type);
+    rng = gsl_rng_alloc(rng_type);
 
-    CU_ASSERT_EQUAL(randSPD(rng, 1.0, &mat), 0);
+    CU_ASSERT_EQUAL(randSPD(rng, 1.0, mat), 0);
 
-    for (i = 0; i < mat.r; ++i) {
+    for (i = 0; i < mat->size1; ++i) {
         abs_value = 0.0;
         
-        for (j = 0; j < mat.c; ++j) {
-            CU_ASSERT_DOUBLE_EQUAL(mat.matrix[j][i], mat.matrix[i][j], 0.0001);
+        for (j = 0; j < mat->size2; ++j) {
+            CU_ASSERT_DOUBLE_EQUAL(
+                gsl_matrix_get(mat, i, j),
+                gsl_matrix_get(mat, j, i),
+                0.0001);
             if (i != j) {
-                abs_value += abs(mat.matrix[i][j]);
+                abs_value += abs(gsl_matrix_get(mat, i, j));
             }
         }
 
-        CU_ASSERT_TRUE(abs_value < mat.matrix[i][i]);
+        CU_ASSERT_TRUE(abs_value < gsl_matrix_get(mat, i, i));
     }
 
-    freeM(&mat);
+    gsl_matrix_free(mat);
     free(rng);
 }
 
 void testZeroScale()
 {
     const gsl_rng_type *rng_type = gsl_rng_mt19937;
-    matrix_t mat;
+    gsl_matrix *mat;
 
-    mat.r = 100;
-    mat.c = mat.r;
-
-    initM(&mat);
+    mat = gsl_matrix_calloc(10, 10);
 
     gsl_rng_env_setup();
     gsl_rng *rng = gsl_rng_alloc(rng_type);
 
-    CU_ASSERT_EQUAL(randSPD(rng, 0, &mat), ZERO_SCALE);
+    CU_ASSERT_EQUAL(randSPD(rng, 0, mat), ZERO_SCALE);
 
-    freeM(&mat);
+    gsl_matrix_free(mat);
     free(rng);
 }
 
 void testNotSymmetric()
 {
     const gsl_rng_type *rng_type = gsl_rng_mt19937;
-    matrix_t mat;
+    gsl_matrix *mat;
 
-    mat.r = 100;
-    mat.c = 101;
-
-    initM(&mat);
+    mat = gsl_matrix_calloc(10, 11);
 
     gsl_rng_env_setup();
     gsl_rng *rng = gsl_rng_alloc(rng_type);
 
-    CU_ASSERT_EQUAL(randSPD(rng, 1.0, &mat), MATRIX_NOT_SYMMETRIC);
+    CU_ASSERT_EQUAL(randSPD(rng, 1.0, mat), MATRIX_NOT_SYMMETRIC);
 
-    freeM(&mat);
+    gsl_matrix_free(mat);
+    free(rng);
+}
+
+void testTooSmall()
+{
+    const gsl_rng_type *rng_type = gsl_rng_mt19937;
+    gsl_matrix *mat;
+
+    mat = gsl_matrix_calloc(1, 2);
+
+    gsl_rng_env_setup();
+    gsl_rng *rng = gsl_rng_alloc(rng_type);
+
+    CU_ASSERT_EQUAL(randSPD(rng, 1.0, mat), MATRIX_TOO_SMALL);
+
+    gsl_matrix_free(mat);
     free(rng);
 }

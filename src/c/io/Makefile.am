@@ -13,11 +13,7 @@ noinst_LTLIBRARIES = libmatio.la
 libmatio_la_SOURCES =                                                \
 	matio.c
 
-libmatio_la_CPPFLAGS = -I./includes                                  \
-	-I$(top_srcdir)/src/c/common/includes
-
-LDADD =                                                              \
-	$(top_srcdir)/src/c/common/libglobals.la
+libmatio_la_CPPFLAGS = -I./includes
 
 
 include_HEADERS = includes

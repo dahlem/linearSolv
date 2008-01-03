@@ -7,11 +7,12 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
-#include <gsl/gsl_rng.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "globals.h"
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_vector.h>
+
 #include "matgen.h"
 
 
@@ -26,35 +27,57 @@ double getRNG(const gsl_rng *const rng)
 }
 
 
-int randSPD(const gsl_rng *const rng, const double scale, matrix_t *mat)
+int randSPD(const gsl_rng *const rng, const double scale, gsl_matrix *mat)
 {
-    int i, j;
+    size_t i, j;
     double abs_value;
     
     
-    if (((mat->r < 2) && (mat->c < 2)) || (mat->c != mat->r)) {
+    if ((mat->size1 < 2) || (mat->size2 < 2)) {
+        return MATRIX_TOO_SMALL;
+    }
+    if (mat->size1 != mat->size2) {
         return MATRIX_NOT_SYMMETRIC;
     }
     if (scale == 0) {
         return ZERO_SCALE;
     }
 
-    for (i = 0; i < mat->r; ++i) {
-        for (j = i+1; j < mat->c; ++j) {
-            mat->matrix[i][j] = scale * getRNG(rng);
-            mat->matrix[j][i] = mat->matrix[i][j];
+    for (i = 0; i < mat->size1; ++i) {
+        for (j = i+1; j < mat->size2; ++j) {
+            gsl_matrix_set(mat, i, j, scale * getRNG(rng));
+            gsl_matrix_set(mat, j, i, gsl_matrix_get(mat, i, j));
         }
     }
 
-    for (i = 0; i < mat->r; ++i) {
+    for (i = 0; i < mat->size1; ++i) {
         abs_value = 0.0;
         
-        for (j = 0; j < mat->c; ++j) {
-            abs_value += abs(mat->matrix[i][j]);
+        for (j = 0; j < mat->size2; ++j) {
+            abs_value += abs(gsl_matrix_get(mat, i, j));
         }
 
-        mat->matrix[i][i] = abs_value + scale * gsl_rng_uniform(rng);
+        gsl_matrix_set(mat, i, i, abs_value + scale * gsl_rng_uniform(rng));
     }
 
     return 0;
 }
+
+
+int linsolv(const gsl_rng *const rng, const double scale, gsl_matrix *mat)
+{
+    int err;
+    gsl_vector *x, *b;
+
+    
+    if (mat->size1 <= 1) {
+        return MATRIX_TOO_SMALL;
+    }
+
+    if ((err = randSPD(rng, scale, mat)) != 0) {
+        return err;
+    }
+    
+    return 0;
+}
+

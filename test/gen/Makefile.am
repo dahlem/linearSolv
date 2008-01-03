@@ -21,14 +21,12 @@ gen_test_SOURCES =                                                   \
 
 gen_test_CPPFLAGS =                                                  \
 	-I./includes                                                 \
-	-I$(top_srcdir)/src/c/common/includes                        \
 	-I$(top_srcdir)/src/c/gen/includes
 
 
 LDADD =                                                              \
 	-lcunit                                                      \
 	-lm                                                          \
-	$(top_srcdir)/src/c/common/libglobals.la                     \
 	$(top_srcdir)/src/c/gen/libmatgen.la
 
 

@@ -8,13 +8,16 @@
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 #include <stdio.h>
+
 #include <CUnit/Basic.h>
 
 #include "gen_test.h"
 
 
-int main (int argc, char* argv[])
+int main()
 {
+    CU_pSuite suite;
+    
     /* initialize the CUnit test registry */
     if (CUE_SUCCESS != CU_initialize_registry()) {
         return CU_get_error();
@@ -26,6 +29,6 @@ int main (int argc, char* argv[])
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
     CU_cleanup_registry();
-   
+
     return CU_get_error();
 }

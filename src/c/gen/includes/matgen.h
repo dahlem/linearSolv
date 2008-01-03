@@ -16,15 +16,17 @@
 #ifndef __MATGEN_H__
 #define __MATGEN_H__
 
+#include <gsl/gsl_matrix.h>
 #include <gsl/gsl_rng.h>
 
 
 #define MATRIX_NOT_SYMMETRIC    11
 #define ZERO_SCALE              12
+#define MATRIX_TOO_SMALL        13
 
 
-int linsolv(const double scale, vector_t *vec, matrix_t *mat);
-int randSPD(const gsl_rng *const rng, const double scale, matrix_t *mat);
+int linsolv(const gsl_rng *const rng, const double scale, gsl_matrix *mat);
+int randSPD(const gsl_rng *const rng, const double scale, gsl_matrix *mat);
 
 
 

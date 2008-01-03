@@ -13,13 +13,12 @@
 #include <time.h>
 
 #include "config.h"
-#include "globals.h"
 #include "matio.h"
 
 
 
 
-int skip(FILE *file, int num_lines)
+int skip(FILE * const file, int num_lines)
 {
     int c;
     int lines = 0;
@@ -43,14 +42,14 @@ int skip(FILE *file, int num_lines)
 }
 
 
-int write(const char *filename, matrix_t *mat, vector_t *vec)
+int write(const char * const filename, gsl_matrix *mat, gsl_vector *vec)
 {
     FILE *out;
     char timestamp[128];
     time_t t;
     struct tm *time_now;
     size_t ret;
-    int i, j;
+    unsigned int i, j;
 
 
     if ((out = fopen(filename, "w")) == NULL) {
@@ -75,31 +74,27 @@ int write(const char *filename, matrix_t *mat, vector_t *vec)
     }
 
     if (mat != NULL) {
-        if ((mat->matrix != NULL) && (mat->_block != NULL)) {
-            fprintf(out, "# name: A\n");
-            fprintf(out, "# type: matrix\n");
-            fprintf(out, "# rows: %d\n", mat->r);
-            fprintf(out, "# columns: %d\n", mat->c);
+        fprintf(out, "# name: A\n");
+        fprintf(out, "# type: matrix\n");
+        fprintf(out, "# rows: %d\n", mat->size1);
+        fprintf(out, "# columns: %d\n", mat->size2);
 
-            for (i = 0; i < mat->r; ++i) {
-                for (j = 0; j < mat->c; ++j) {
-                    fprintf(out, " %f", mat->matrix[i][j]);
-                }
-                fprintf(out, "\n");
+        for (i = 0; i < mat->size1; ++i) {
+            for (j = 0; j < mat->size2; ++j) {
+                fprintf(out, " %f", gsl_matrix_get(mat, i, j));
             }
+            fprintf(out, "\n");
         }
     }
 
     if (vec != NULL) {
-        if (vec->vector != NULL) {
-            fprintf(out, "# name: v\n");
-            fprintf(out, "# type: matrix\n");
-            fprintf(out, "# rows: %d\n", vec->size);
-            fprintf(out, "# columns: 1\n");
+        fprintf(out, "# name: v\n");
+        fprintf(out, "# type: matrix\n");
+        fprintf(out, "# rows: %d\n", vec->size);
+        fprintf(out, "# columns: 1\n");
 
-            for (i = 0; i < vec->size; ++i) {
-                fprintf(out, " %f\n", vec->vector[i]);
-            }
+        for (i = 0; i < vec->size; ++i) {
+            fprintf(out, " %f\n", gsl_vector_get(vec, i));
         }
     }
 
@@ -109,7 +104,7 @@ int write(const char *filename, matrix_t *mat, vector_t *vec)
 }
 
 
-int read_dim(const FILE *file, int *rows, int *columns)
+int read_dim(FILE * const file, int *rows, int *columns)
 {
     char line[MAX_LINE_BUFFER];
     char line_tokens[2][3][MAX_TOKEN_BUFFER];
@@ -150,29 +145,36 @@ int read_dim(const FILE *file, int *rows, int *columns)
     return 0;
 }
 
-int readVector(const FILE const* file, vector_t *vec)
+int readVector(FILE * const file, gsl_vector **vec)
 {
-    int i;
+    unsigned int i;
+    float elem;
+    
 
-    for (i = 0; i < vec->size; ++i) {
-        if (fscanf(file, "%f", &(vec->vector[i])) != 1) {
+    for (i = 0; i < (*vec)->size; ++i) {
+        if (fscanf(file, "%f", &elem) != 1) {
             return PREMATURE_END_OF_STREAM;
         }
+
+        gsl_vector_set(*vec, i, elem);
     }
 
     return 0;
 }
 
 
-int readMatrix(const FILE const* file, matrix_t *mat)
+int readMatrix(FILE * const file, gsl_matrix **mat)
 {
-    int i, j;
+    unsigned int i, j;
+    float elem;
+    
 
-    for (i = 0; i < mat->r; ++i) {
-        for (j = 0; j < mat->c; ++j) {
-            if (fscanf(file, "%f", &(mat->matrix[i][j])) != 1) {
+    for (i = 0; i < (*mat)->size1; ++i) {
+        for (j = 0; j < (*mat)->size2; ++j) {
+            if (fscanf(file, "%f", &elem) != 1) {
                 return PREMATURE_END_OF_STREAM;
             }
+            gsl_matrix_set(*mat, i, j, elem);
         }
     }
 
@@ -180,7 +182,7 @@ int readMatrix(const FILE const* file, matrix_t *mat)
 }
 
 
-int read(const char *filename, matrix_t *mat, vector_t *vec)
+int read(const char * const filename, gsl_matrix **mat, gsl_vector **vec)
 {
     FILE *in;
     int ret, rows, columns;
@@ -200,9 +202,7 @@ int read(const char *filename, matrix_t *mat, vector_t *vec)
     }
 
     if ((rows > 0) && (columns > 1)) {
-        mat->r = rows;
-        mat->c = columns;
-        initM(mat);
+        *mat = gsl_matrix_calloc(rows, columns);
         readMatrix(in, mat);
     } else {
         return ILLEGAL_FORMAT;
@@ -217,8 +217,7 @@ int read(const char *filename, matrix_t *mat, vector_t *vec)
     }
 
     if ((rows > 0) && (columns == 1)) {
-        vec->size = rows;
-        initV(vec);
+        *vec = gsl_vector_alloc(rows);
         readVector(in, vec);
     } else {
         return ILLEGAL_FORMAT;

@@ -7,12 +7,13 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
-#include <CUnit/CUnit.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "globals.h"
+#include <CUnit/CUnit.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
+
 #include "matio.h"
 
 #include "io_test.h"
@@ -29,64 +30,58 @@ void registerTests()
 
 void testWriteVector()
 {
-    vector_t vec, vec_read;
-    matrix_t mat_read;
+    gsl_matrix *mat_read;
+    gsl_vector *vec, *vec_read;
     char *temp_file;
 
-    vec.size = 2;
-    initV(&vec);
+    vec = gsl_vector_calloc(2);
 
     temp_file = tmpnam(NULL);
     
-    CU_ASSERT_EQUAL(write(temp_file, NULL, &vec), 0);
+    CU_ASSERT_EQUAL(write(temp_file, NULL, vec), 0);
     CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), ILLEGAL_FORMAT);
 
-    freeV(&vec);
+    gsl_vector_free(vec);
 }
 
 
 void testWriteBoth()
 {
-    vector_t vec, vec_read;
-    matrix_t mat, mat_read;
+    gsl_vector *vec, *vec_read;
+    gsl_matrix *mat, *mat_read;
     char *temp_file;
 
-    vec.size = 2;
-    mat.r = 2;
-    mat.c = 3;
-
-    initV(&vec);
-    initM(&mat);
+    vec = gsl_vector_calloc(2);
+    mat = gsl_matrix_calloc(2, 3);
 
     temp_file = tmpnam(NULL);
 
-    CU_ASSERT_EQUAL(write(temp_file, &mat, &vec), 0);
+    CU_ASSERT_EQUAL(write(temp_file, mat, vec), 0);
     CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), 0);
 
-    CU_ASSERT_EQUAL(vec_read.size, vec.size);
-    CU_ASSERT_EQUAL(mat_read.r, mat.r);
-    CU_ASSERT_EQUAL(mat_read.c, mat.c);
+    CU_ASSERT_EQUAL(vec_read->size, vec->size);
+    CU_ASSERT_EQUAL(mat_read->size1, mat->size1);
+    CU_ASSERT_EQUAL(mat_read->size2, mat->size2);
 
-    freeV(&vec);
-    freeM(&mat);
+    gsl_vector_free(vec);
+    gsl_matrix_free(mat);
+    gsl_vector_free(vec_read);
+    gsl_matrix_free(mat_read);
 }
 
 
 void testWriteMatrix()
 {
-    vector_t vec_read;
-    matrix_t mat, mat_read;
+    gsl_vector *vec_read;
+    gsl_matrix *mat, *mat_read;
     char *temp_file;
 
-    mat.r = 2;
-    mat.c = 3;
-
-    initM(&mat);
+    mat = gsl_matrix_calloc(2, 3);
 
     temp_file = tmpnam(NULL);
 
-    CU_ASSERT_EQUAL(write(temp_file, &mat, NULL), 0);
+    CU_ASSERT_EQUAL(write(temp_file, mat, NULL), 0);
     CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), ILLEGAL_FORMAT);
 
-    freeM(&mat);
+    gsl_matrix_free(mat);
 }
