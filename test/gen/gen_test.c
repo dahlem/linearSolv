@@ -139,5 +139,6 @@ void testSolv()
 
     gsl_matrix_free(mat);
     gsl_vector_free(b);
+    gsl_vector_free(temp);
     free(rng);
 }
