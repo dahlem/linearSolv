@@ -22,6 +22,7 @@ void testRandSPD();
 void testNotSymmetric();
 void testZeroScale();
 void testTooSmall();
+void testSolv();
 
 
 static CU_TestInfo test_gen[] = {
@@ -29,6 +30,7 @@ static CU_TestInfo test_gen[] = {
     { "testZeroScale", testZeroScale },
     { "testTooSmall", testTooSmall },
     { "testRandSPD", testRandSPD },
+    { "testSolv", testSolv },
     CU_TEST_INFO_NULL,
 };
 

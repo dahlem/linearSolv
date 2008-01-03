@@ -12,6 +12,7 @@
 
 #include <CUnit/CUnit.h>
 #include <gsl/gsl_rng.h>
+#include <gsl/gsl_blas.h>
 
 #include "matgen.h"
 #include "gen_test.h"
@@ -105,5 +106,38 @@ void testTooSmall()
     CU_ASSERT_EQUAL(randSPD(rng, 1.0, mat), MATRIX_TOO_SMALL);
 
     gsl_matrix_free(mat);
+    free(rng);
+}
+
+void testSolv() 
+{
+    const gsl_rng_type *rng_type = gsl_rng_mt19937;
+    gsl_matrix *mat;
+    gsl_vector *b, *x, *temp;
+    size_t i;
+    
+    
+    gsl_rng_env_setup();
+    gsl_rng *rng = gsl_rng_alloc(rng_type);
+
+    CU_ASSERT_EQUAL(
+        linsolv(rng, 10, 1.0, &mat, &b),
+        0
+        );
+
+    x = gsl_vector_alloc(10);
+    gsl_vector_set_all(x, -1.0);    
+    temp = gsl_vector_calloc(10);
+    gsl_blas_dgemv(CblasNoTrans, 1.0, mat, x, 0.0, temp);
+
+    for (i = 0; i < temp->size; ++i) {
+        CU_ASSERT_DOUBLE_EQUAL(
+            gsl_vector_get(b, i),
+            gsl_vector_get(temp, i),
+            0.01);
+    }
+
+    gsl_matrix_free(mat);
+    gsl_vector_free(b);
     free(rng);
 }

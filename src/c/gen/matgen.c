@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gsl/gsl_blas.h>
 #include <gsl/gsl_rng.h>
-#include <gsl/gsl_vector.h>
 
 #include "matgen.h"
 
@@ -64,20 +64,26 @@ int randSPD(const gsl_rng *const rng, const double scale, gsl_matrix *mat)
 }
 
 
-int linsolv(const gsl_rng *const rng, const double scale, gsl_matrix *mat)
+int linsolv(const gsl_rng *const rng, const size_t dim, const double scale,
+            gsl_matrix **mat, gsl_vector **b)
 {
-    int err;
-    gsl_vector *x, *b;
+    int status;
+    gsl_vector *x;
 
-    
-    if (mat->size1 <= 1) {
-        return MATRIX_TOO_SMALL;
+
+    *mat = gsl_matrix_calloc(dim, dim);
+
+    if ((status = randSPD(rng, scale, *mat)) != 0) {
+        return status;
     }
 
-    if ((err = randSPD(rng, scale, mat)) != 0) {
-        return err;
-    }
+    x = gsl_vector_alloc(dim);
+    gsl_vector_set_all(x, -1.0);
     
-    return 0;
+    *b = gsl_vector_calloc(dim);
+    status = gsl_blas_dgemv(CblasNoTrans, 1.0, *mat, x, 0.0, *b);
+
+    gsl_vector_free(x);
+    
+    return status;
 }
-

@@ -26,6 +26,8 @@ gen_test_CPPFLAGS =                                                  \
 
 LDADD =                                                              \
 	-lcunit                                                      \
+	-lgsl                                                        \
+	-lgslcblas                                                   \
 	-lm                                                          \
 	$(top_srcdir)/src/c/gen/libmatgen.la
 

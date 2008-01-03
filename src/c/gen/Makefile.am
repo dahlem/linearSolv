@@ -15,6 +15,10 @@ libmatgen_la_SOURCES =                                               \
 
 libmatgen_la_CPPFLAGS = -I./includes
 
+LDADD =                                                              \
+	-lgsl                                                        \
+	-lgslcblas                                                   \
+	-lm
 
 
 include_HEADERS = includes
