@@ -94,6 +94,8 @@ void testPivotRow()
             gsl_matrix_get(&A.matrix, 1, i),
             0.001);
     }
+
+    gsl_vector_free(temp);
 }
 
 
@@ -181,10 +183,11 @@ void testGauss()
     gsl_blas_dgemv(CblasNoTrans, 1.0, &A.matrix, x_bar, 0.0, temp);
 
     for (i = 0; i < temp->size; ++i) {
-        printf("%f\n", gsl_vector_get(temp, i));
         CU_ASSERT_DOUBLE_EQUAL(
             gsl_vector_get(&b.vector, i),
             gsl_vector_get(temp, i),
             0.01);
     }
+
+    gsl_vector_free(temp);
 }
