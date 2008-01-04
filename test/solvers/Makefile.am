@@ -16,6 +16,7 @@ check_PROGRAMS = $(TESTS)
 
 solvers_test_SOURCES =                                               \
 	solvers_suite.c                                              \
+	gauss_test.c                                                 \
 	subst_test.c
 
 
@@ -26,8 +27,9 @@ solvers_test_CPPFLAGS =                                              \
 
 LDADD =                                                              \
 	-lcunit                                                      \
-	-lm                                                          \
 	-lgsl                                                        \
+	-lgslcblas                                                   \
+	-lm                                                          \
 	$(top_srcdir)/src/c/solvers/libsolvers.la
 
 

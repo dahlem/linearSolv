@@ -11,13 +11,14 @@
 noinst_LTLIBRARIES = libsolvers.la
 
 libsolvers_la_SOURCES =                                               \
-	subst.c
+	subst.c                                                       \
+	gauss.c
 
 libsolvers_la_CPPFLAGS = -I./includes
 
-LDADD =                                                              \
-	-lgsl                                                        \
-	-lgslcblas                                                   \
+LDADD =                                                               \
+	-lgsl                                                         \
+	-lgslcblas                                                    \
 	-lm
 
 
