@@ -8,6 +8,6 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-SUBDIRS = gen io
+SUBDIRS = gen io solvers
 
 include $(top_srcdir)/mk/gcov-recursive.am

@@ -8,5 +8,18 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+noinst_LTLIBRARIES = libsolvers.la
 
-SUBDIRS = io gen solvers
+libsolvers_la_SOURCES =                                               \
+	subst.c
+
+libsolvers_la_CPPFLAGS = -I./includes
+
+LDADD =                                                              \
+	-lgsl                                                        \
+	-lgslcblas                                                   \
+	-lm
+
+
+include_HEADERS = includes
+MAINTAINERCLEANFILES = Makefile.in

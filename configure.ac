@@ -46,10 +46,15 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_C_CONST
+AC_TYPE_SIZE_T
+AC_STRUCT_TM
 
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
 AC_FUNC_MALLOC
+AC_FUNC_STRFTIME
 AC_CHECK_FUNCS([memset])
 
 # GSL library checks
@@ -97,9 +102,11 @@ AC_CONFIG_FILES([
    src/c/Makefile
    src/c/gen/Makefile
    src/c/io/Makefile
+   src/c/solvers/Makefile
    test/Makefile
    test/gen/Makefile
    test/io/Makefile
+   test/solvers/Makefile
 ])
 
 
@@ -111,7 +118,7 @@ done
 
 AC_MSG_RESULT([
 
-des $VERSION: Automatic configuration OK.
+linearsolv $VERSION: Automatic configuration OK.
 
 Type 'make' to compile this project.
 
