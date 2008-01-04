@@ -27,7 +27,7 @@ void registerSubstTests()
 }
 
 
-void testIsUpperWrongRowColumn() 
+void testIsUpperWrongRowColumn()
 {
     double a[] = {
         1, 2, 3, 4, 5, 6, 7, 8, 9
@@ -39,7 +39,7 @@ void testIsUpperWrongRowColumn()
 }
 
 
-void testIsNotUpper() 
+void testIsNotUpper()
 {
     double a[] = {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
@@ -51,7 +51,7 @@ void testIsNotUpper()
 }
 
 
-void testIsUpper() 
+void testIsUpper()
 {
     double a[] = {
         1, 2, 3, 4,
@@ -62,4 +62,54 @@ void testIsUpper()
     gsl_matrix_view A = gsl_matrix_view_array(a, 3, 4);
 
     CU_ASSERT_EQUAL(isUpper(&A.matrix), true);
+}
+
+
+void testBackwards()
+{
+    gsl_vector *x_bar;
+    size_t i;
+
+    double u[] = {
+        1, 0.5, 1.5, 2, 5,
+        0, 1, -1, 16, 16,
+        0, 0, 1, -41, -40,
+        0, 0, 0, 1, 1
+    };
+
+    gsl_matrix_view M = gsl_matrix_view_array(u, 4, 5);
+
+    CU_ASSERT_EQUAL(subst_backwards(&M.matrix, &x_bar), 0);
+
+    for (i = 0; i < x_bar->size; ++i) {
+        CU_ASSERT_DOUBLE_EQUAL(
+            gsl_vector_get(x_bar, i),
+            1.0,
+            0.01);
+    }
+}
+
+
+void testForwards() 
+{
+    gsl_vector *x_bar;
+    size_t i;
+
+    double l[] = {
+        2, 0, 0, 0, 2,
+        3, -0.5, 0, 0, 2.5,
+        2, 2, 1, 0, 5,
+        1, 1.5, 4, 141, 147.5
+    };
+
+    gsl_matrix_view M = gsl_matrix_view_array(l, 4, 5);
+
+    CU_ASSERT_EQUAL(subst_forwards(&M.matrix, &x_bar), 0);
+
+    for (i = 0; i < x_bar->size; ++i) {
+        CU_ASSERT_DOUBLE_EQUAL(
+            gsl_vector_get(x_bar, i),
+            1.0,
+            0.01);
+    }
 }

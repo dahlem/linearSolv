@@ -33,13 +33,51 @@ bool isUpper(gsl_matrix *M)
 }
 
 
-/* int subst_backwards(gsl_matrix *M, gsl_vector **x_bar) */
-/* { */
-/* //    size_t i, j; */
+int subst_backwards(gsl_matrix *M, gsl_vector **x_bar)
+{
+    size_t i, j;
+    double x_temp;
 
 
-/*     *x_bar = gsl_vector_calloc(M->size1); */
+    *x_bar = gsl_vector_calloc(M->size1);
 
+    i = M->size1;
     
-/*     return 0; */
-/* } */
+    while (i-- > 0) {
+        x_temp = 0;
+        
+        for (j = (i + 1); j < (M->size2 - 1); ++j) {
+            x_temp += gsl_matrix_get(M, i, j) * gsl_vector_get(*x_bar, j);
+        }
+
+        gsl_vector_set(*x_bar, i,
+                       (gsl_matrix_get(M, i, (M->size2 - 1)) - x_temp)
+                       / gsl_matrix_get(M, i, i));
+    }
+    
+    return 0;
+}
+
+
+int subst_forwards(gsl_matrix *M, gsl_vector **x_bar)
+{
+    size_t i, j;
+    double x_temp;
+
+
+    *x_bar = gsl_vector_calloc(M->size1);
+
+    for (i = 0; i < M->size1; ++i) {
+        x_temp = 0;
+        
+        for (j = 0; j < i; ++j) {
+            x_temp += gsl_matrix_get(M, i, j) * gsl_vector_get(*x_bar, j);
+        }
+
+        gsl_vector_set(*x_bar, i,
+                       (gsl_matrix_get(M, i, (M->size2 - 1)) - x_temp)
+                       / gsl_matrix_get(M, i, i));
+    }
+    
+    return 0;
+}

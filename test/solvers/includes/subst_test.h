@@ -22,12 +22,16 @@ void registerSubstTests();
 void testIsUpperWrongRowColumn();
 void testIsNotUpper();
 void testIsUpper();
+void testBackwards();
+void testForwards();
 
 
 static CU_TestInfo test_subst[] = {
     { "testIsUpperWrongRowColumn", testIsUpperWrongRowColumn },
     { "testIsNotUpper", testIsNotUpper },
     { "testIsUpper", testIsUpper },
+    { "testBackwards", testBackwards },
+    { "testForwards", testForwards },
     CU_TEST_INFO_NULL,
 };
 

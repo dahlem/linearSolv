@@ -28,8 +28,8 @@
 
 
 bool isUpper(gsl_matrix *M);
-int subst_backwards(gsl_matrix *M, gsl_vector *x_bar);
-int subst_forwards(gsl_matrix *M, gsl_vector *x_bar);
+int subst_backwards(gsl_matrix *M, gsl_vector **x_bar);
+int subst_forwards(gsl_matrix *M, gsl_vector **x_bar);
 
 
 
