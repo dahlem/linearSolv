@@ -14,7 +14,8 @@ libsolvers_la_SOURCES =                                               \
 	subst.c                                                       \
 	util.c                                                        \
 	gauss.c                                                       \
-	lu.c
+	lu.c                                                          \
+	chol.c
 
 libsolvers_la_CPPFLAGS = -I./includes
 

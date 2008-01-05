@@ -1,4 +1,7 @@
 /libsolvers.la
+/libsolvers_la-chol.gcno
+/libsolvers_la-chol.lo
+/libsolvers_la-chol.o
 /libsolvers_la-gauss.gcno
 /libsolvers_la-gauss.lo
 /libsolvers_la-gauss.o

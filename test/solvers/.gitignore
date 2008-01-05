@@ -1,4 +1,7 @@
 /solvers_test
+/solvers_test-chol_test.gcda
+/solvers_test-chol_test.gcno
+/solvers_test-chol_test.o
 /solvers_test-gauss_test.gcda
 /solvers_test-gauss_test.gcno
 /solvers_test-gauss_test.o

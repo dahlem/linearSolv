@@ -18,6 +18,7 @@ solvers_test_SOURCES =                                               \
 	solvers_suite.c                                              \
 	gauss_test.c                                                 \
 	lu_test.c                                                    \
+	chol_test.c                                                  \
 	subst_test.c
 
 
