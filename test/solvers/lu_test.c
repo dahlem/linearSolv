@@ -116,4 +116,6 @@ void testLU()
     }
 
     gsl_vector_free(temp);
+    gsl_vector_free(x_bar);
+    gsl_vector_free(x_error);
 }
