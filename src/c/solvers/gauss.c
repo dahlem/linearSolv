@@ -111,7 +111,7 @@ int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
 {
     gsl_matrix *M;
     gsl_vector *vec;
-    size_t i, j;
+    size_t j;
     int status;
     
 
@@ -119,9 +119,9 @@ int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
         return MATRIX_VECTOR_UNEQUAL_ROW_DIM;
     }
 
-//    if ((status = isPositiveDefinite(A))) {
-//        return status;
-//    }
+/*     if ((status = isPositiveDefinite(A))) { */
+/*         return status; */
+/*     } */
 
     M = gsl_matrix_alloc(A->size1, A->size2 + 1);
     vec = gsl_vector_alloc(A->size2);
@@ -141,19 +141,8 @@ int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
         return status;
     }
 
-    *x_error = gsl_vector_alloc((*x_bar)->size);
-    gsl_vector_memcpy(*x_error, x);
-    gsl_vector_sub(*x_error, *x_bar);
-
-    *max_error = fabs(gsl_vector_get(*x_error, 0));
-    
-    for (i = 1; i < (*x_error)->size; ++i) {
-        double elem = fabs(gsl_vector_get(*x_error, i));
-
-        if (*max_error < elem) {
-            *max_error = elem;
-        }
-    }
+    /* get the error statistics */
+    gatherErrors(*x_bar, x, x_error, max_error);
     
     gsl_matrix_free(M);
     

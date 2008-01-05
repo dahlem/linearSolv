@@ -18,11 +18,14 @@
 
 
 #include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
 
 #include "error.h"
 
 
 int isPositiveDefinite(gsl_matrix *A);
+void gatherErrors(gsl_vector *x_bar, gsl_vector *x, gsl_vector **x_error,
+                  double *max_error);
 
 
 

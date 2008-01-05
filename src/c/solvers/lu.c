@@ -7,7 +7,6 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
-#include <gsl/gsl_blas.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 
@@ -73,9 +72,9 @@ int crout(gsl_matrix *A, gsl_matrix **L, gsl_matrix **U)
 int lu(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
        gsl_vector **x_bar, gsl_vector **x_error, double *max_error)
 {
-    gsl_matrix *M;
-    gsl_vector *vec;
-    size_t i, j;
+    gsl_matrix *ML, *MU, *L, *U;
+    gsl_vector *vec, *y_bar;
+    size_t j, i;
     int status;
     
 
@@ -83,43 +82,54 @@ int lu(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
         return MATRIX_VECTOR_UNEQUAL_ROW_DIM;
     }
     
-//    if ((status = isPositiveDefinite(A))) {
-//        return status;
-//    }
+/*     if ((status = isPositiveDefinite(A))) { */
+/*         return status; */
+/*     } */
 
-    M = gsl_matrix_alloc(A->size1, A->size2 + 1);
-    vec = gsl_vector_alloc(A->size2);
+    if ((status = crout(A, &L, &U))) {
+        return status;
+    }
+
+    /* prepare the (L|b) matrix */
+    ML = gsl_matrix_alloc(L->size1, L->size2 + 1);
+    vec = gsl_vector_alloc(L->size2);
     
-    for (j = 0; j < A->size2; ++j) {
-        gsl_matrix_get_col(vec, A, j);
-        gsl_matrix_set_col(M, j, vec);
+    for (j = 0; j < L->size2; ++j) {
+        gsl_matrix_get_col(vec, L, j);
+        gsl_matrix_set_col(ML, j, vec);
+    }
+    
+    gsl_matrix_set_col(ML, ML->size2 - 1, b);
+
+    /* solve the (L|b) matrix using forwards substitution */
+    if ((status = subst_forwards(ML, &y_bar))) {
+        return status;
+    }
+
+    /* prepare the (U|b) matrix */
+    MU = gsl_matrix_alloc(U->size1, U->size2 + 1);
+    
+    for (j = 0; j < U->size2; ++j) {
+        gsl_matrix_get_col(vec, U, j);
+        gsl_matrix_set_col(MU, j, vec);
     }
     gsl_vector_free(vec);
     
-    gsl_matrix_set_col(M, M->size2 - 1, b);
+    gsl_matrix_set_col(MU, MU->size2 - 1, y_bar);
 
-    if ((status = triangular(M))) {
+    /* solve the (U|b) matrix using backwards substitution */
+    if ((status = subst_backwards(MU, x_bar))) {
         return status;
     }
-    if ((status = subst_backwards(M, x_bar))) {
-        return status;
-    }
 
-    *x_error = gsl_vector_alloc((*x_bar)->size);
-    gsl_vector_memcpy(*x_error, x);
-    gsl_vector_sub(*x_error, *x_bar);
+    gsl_vector_free(y_bar);
+    gsl_matrix_free(ML);
+    gsl_matrix_free(MU);
+    gsl_matrix_free(L);
+    gsl_matrix_free(U);
 
-    *max_error = fabs(gsl_vector_get(*x_error, 0));
-    
-    for (i = 1; i < (*x_error)->size; ++i) {
-        double elem = fabs(gsl_vector_get(*x_error, i));
-
-        if (*max_error < elem) {
-            *max_error = elem;
-        }
-    }
-    
-    gsl_matrix_free(M);
+    /* get the error statistics */
+    gatherErrors(*x_bar, x, x_error, max_error);
     
     return 0;
 }

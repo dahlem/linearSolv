@@ -20,10 +20,12 @@ void registerLUTests();
 
 
 void testCrout();
+void testLU();
 
 
 static CU_TestInfo test_lu[] = {
     { "testCrout", testCrout },
+    { "testLU", testLU },
     CU_TEST_INFO_NULL,
 };
 
