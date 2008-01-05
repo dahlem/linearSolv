@@ -21,6 +21,7 @@ solvers_test_SOURCES =                                               \
 	chol_test.c                                                  \
 	jacobi_test.c                                                \
 	seidel_test.c                                                \
+	steepest_test.c                                              \
 	subst_test.c
 
 

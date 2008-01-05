@@ -17,7 +17,8 @@ libsolvers_la_SOURCES =                                               \
 	lu.c                                                          \
 	chol.c                                                        \
 	jacobi.c                                                      \
-	seidel.c
+	seidel.c                                                      \
+	steepest.c
 
 libsolvers_la_CPPFLAGS = -I./includes
 

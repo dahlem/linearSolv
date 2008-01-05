@@ -15,6 +15,7 @@
 #include "jacobi_test.h"
 #include "lu_test.h"
 #include "seidel_test.h"
+#include "steepest_test.h"
 #include "subst_test.h"
 
 
@@ -31,6 +32,7 @@ int main (int argc, char* argv[])
     registerCholTests();
     registerJacobiTests();
     registerSeidelTests();
+    registerSteepestTests();
     
     /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);
