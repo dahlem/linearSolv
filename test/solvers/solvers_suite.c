@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <CUnit/Basic.h>
 
+#include "conjugate_test.h"
 #include "gauss_test.h"
 #include "chol_test.h"
 #include "jacobi_test.h"
@@ -33,6 +34,7 @@ int main (int argc, char* argv[])
     registerJacobiTests();
     registerSeidelTests();
     registerSteepestTests();
+    registerConjugateTests();
     
     /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);

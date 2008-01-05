@@ -2,6 +2,9 @@
 /libsolvers_la-chol.gcno
 /libsolvers_la-chol.lo
 /libsolvers_la-chol.o
+/libsolvers_la-conjugate.gcno
+/libsolvers_la-conjugate.lo
+/libsolvers_la-conjugate.o
 /libsolvers_la-gauss.gcno
 /libsolvers_la-gauss.lo
 /libsolvers_la-gauss.o
