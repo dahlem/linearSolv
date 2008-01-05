@@ -12,7 +12,9 @@ noinst_LTLIBRARIES = libsolvers.la
 
 libsolvers_la_SOURCES =                                               \
 	subst.c                                                       \
-	gauss.c
+	util.c                                                        \
+	gauss.c                                                       \
+	lu.c
 
 libsolvers_la_CPPFLAGS = -I./includes
 

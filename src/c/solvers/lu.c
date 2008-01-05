@@ -7,97 +7,60 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
-#include <math.h>
-
 #include <gsl/gsl_blas.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
 
-#include "gauss.h"
+#include "error.h"
+#include "lu.h"
 #include "subst.h"
 #include "util.h"
 
 
-int largestPivot(gsl_matrix *M, size_t r, size_t c)
-{
-    size_t i, k;
-    double maxElem;
 
-    if (r >= M->size1) {
-        return ROW_OUT_OF_BOUNDS;
-    }
-    if (c >= M->size2) {
-        return COLUMN_OUT_OF_BOUNDS;
-    }
-
-    k = r;
-
-    if (r == (M->size1 - 1)) {
-        return k;
-    }
-
-    maxElem = gsl_matrix_get(M, r, c);
-
-    for (i = r; i < M->size1; ++i) {
-        double elem = gsl_matrix_get(M, i, c);
-
-        if (elem > maxElem) {
-            maxElem = elem;
-            k = i;
-        }
-    }
-
-    return k;
-}
-
-
-int pivotRow(gsl_matrix *M, size_t r, size_t c)
-{
-    size_t k;
-
-    if (r >= M->size1) {
-        return ROW_OUT_OF_BOUNDS;
-    }
-    if (c >= M->size2) {
-        return COLUMN_OUT_OF_BOUNDS;
-    }
-
-    if (gsl_matrix_get(M, r, c) == 0) {
-        return 0;
-    }
-
-    k = largestPivot(M, r, c);
-
-    if (k == r) {
-        return 0;
-    }
-
-    gsl_matrix_swap_rows(M, r, k);
-
-    return 0;
-}
-
-
-int triangular(gsl_matrix *M)
+int crout(gsl_matrix *A, gsl_matrix **L, gsl_matrix **U)
 {
     size_t i, j, k;
-    gsl_vector_view vec_view1, vec_view2;
+    double temp;
     
-
-    if (M->size1 != (M->size2 - 1)) {
-        return MATRIX_NOT_RECTANGULAR;
+    
+    if (A->size1 != A->size2) {
+        return MATRIX_NOT_SQUARE;
     }
 
-    for (j = 0; j < (M->size2 - 2); ++j) {
-        pivotRow(M, j, j);
+    *U = gsl_matrix_calloc(A->size1, A->size2);
+    gsl_matrix_set_identity(*U);
 
-        for (i = (j + 1); i < M->size1; ++i) {
-            vec_view1 = gsl_matrix_row(M, i);
-            vec_view2 = gsl_matrix_row(M, j);
-            
-            gsl_blas_daxpy(-gsl_matrix_get(M, i, j)/gsl_matrix_get(M, j, j),
-                           &vec_view2.vector, &vec_view1.vector);
-            for (k = 0; k < (&vec_view1.vector)->size; ++k) {
-                gsl_vector_set(&vec_view1.vector, k,
-                               fabs(gsl_vector_get(&vec_view1.vector, k)));
+    *L = gsl_matrix_calloc(A->size1, A->size2);
+
+    for (i = 0; i < A->size1; ++i) {
+        gsl_matrix_set(*L, i, 0, gsl_matrix_get(A, i, 0));
+        gsl_matrix_set(*U, 0, i, gsl_matrix_get(A, 0, i) / gsl_matrix_get(A, 0, 0));
+    }
+
+    for (i = 0; i < A->size1; ++i) {
+        for (j = 1; j <= i; ++j) {
+            if (j <= i) {
+                temp = 0.0;
+
+                for (k = 0; k < j; ++k) {
+                    temp += gsl_matrix_get(*L, i, k) * gsl_matrix_get(*U, k, j);
+                }
+
+                gsl_matrix_set(*L, i, j, gsl_matrix_get(A, i, j) - temp);
+            }
+        }
+
+        for (j = 1; j < A->size2; ++j) {
+            if ((i > 0) && (i <= j)) {
+                temp = 0.0;
+
+                for (k = 0; k < i; ++k) {
+                    temp += gsl_matrix_get(*L, i, k) * gsl_matrix_get(*U, k, j);
+                }
+
+                gsl_matrix_set(*U, i, j, (gsl_matrix_get(A, i, j) - temp) /
+                               gsl_matrix_get(*L, i, i));
             }
         }
     }
@@ -106,8 +69,9 @@ int triangular(gsl_matrix *M)
 }
 
 
-int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
-          gsl_vector **x_bar, gsl_vector **x_error, double *max_error)
+
+int lu(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
+       gsl_vector **x_bar, gsl_vector **x_error, double *max_error)
 {
     gsl_matrix *M;
     gsl_vector *vec;
@@ -118,7 +82,7 @@ int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
     if (b->size != A->size1) {
         return MATRIX_VECTOR_UNEQUAL_ROW_DIM;
     }
-
+    
 //    if ((status = isPositiveDefinite(A))) {
 //        return status;
 //    }

@@ -17,6 +17,7 @@ check_PROGRAMS = $(TESTS)
 solvers_test_SOURCES =                                               \
 	solvers_suite.c                                              \
 	gauss_test.c                                                 \
+	lu_test.c                                                    \
 	subst_test.c
 
 

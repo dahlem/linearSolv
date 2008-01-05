@@ -8,28 +8,28 @@
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 
-/**
- * Declaration of the methods for gaussian elimination.
- *
- * @author Dominik Dahlem (ID: 02175321)
- */
-#ifndef __GAUSS_H__
-#define __GAUSS_H__
+#ifndef __LU_TEST_H__
+#define __LU_TEST_H__
 
 
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_vector.h>
-
-#include "error.h"
+#include <CUnit/CUnit.h>
 
 
-int triangular(gsl_matrix *M);
-int largestPivot(gsl_matrix *M, size_t r, size_t c);
-int pivotRow(gsl_matrix *M, size_t r, size_t c);
-
-int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
-          gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
+void registerLUTests();
 
 
+
+void testCrout();
+
+
+static CU_TestInfo test_lu[] = {
+    { "testCrout", testCrout },
+    CU_TEST_INFO_NULL,
+};
+
+static CU_SuiteInfo lu_suites[] = {
+    { "TestLU", NULL, NULL, test_lu },
+    CU_SUITE_INFO_NULL,
+};
 
 #endif

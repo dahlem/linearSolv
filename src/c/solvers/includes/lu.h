@@ -9,12 +9,12 @@
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 
 /**
- * Declaration of the methods for gaussian elimination.
+ * Declaration of the methods for the LU decomposition with crout reduction.
  *
  * @author Dominik Dahlem (ID: 02175321)
  */
-#ifndef __GAUSS_H__
-#define __GAUSS_H__
+#ifndef __LU_H__
+#define __LU_H__
 
 
 #include <gsl/gsl_matrix.h>
@@ -23,12 +23,9 @@
 #include "error.h"
 
 
-int triangular(gsl_matrix *M);
-int largestPivot(gsl_matrix *M, size_t r, size_t c);
-int pivotRow(gsl_matrix *M, size_t r, size_t c);
-
-int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
-          gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
+int lu(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
+       gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
+int crout(gsl_matrix *A, gsl_matrix **L, gsl_matrix **U);
 
 
 

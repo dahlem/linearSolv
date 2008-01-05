@@ -7,29 +7,24 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
+#include <gsl/gsl_linalg.h>
 
-/**
- * Declaration of the methods for gaussian elimination.
- *
- * @author Dominik Dahlem (ID: 02175321)
- */
-#ifndef __GAUSS_H__
-#define __GAUSS_H__
-
-
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_vector.h>
-
-#include "error.h"
-
-
-int triangular(gsl_matrix *M);
-int largestPivot(gsl_matrix *M, size_t r, size_t c);
-int pivotRow(gsl_matrix *M, size_t r, size_t c);
-
-int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
-          gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
+#include "util.h"
 
 
 
-#endif
+int isPositiveDefinite(gsl_matrix *A)
+{
+    gsl_matrix *temp;
+
+    temp = gsl_matrix_alloc(A->size1, A->size2);
+    
+    if (gsl_linalg_cholesky_decomp(temp) == GSL_EDOM) {
+        gsl_matrix_free(temp);
+        return MATRIX_NOT_POS_DEF;
+    }
+
+    gsl_matrix_free(temp);
+    
+    return 0;
+}

@@ -9,26 +9,20 @@
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 
 /**
- * Declaration of the methods for gaussian elimination.
+ * Declaration of utility methods.
  *
  * @author Dominik Dahlem (ID: 02175321)
  */
-#ifndef __GAUSS_H__
-#define __GAUSS_H__
+#ifndef __UTIL_H__
+#define __UTIL_H__
 
 
 #include <gsl/gsl_matrix.h>
-#include <gsl/gsl_vector.h>
 
 #include "error.h"
 
 
-int triangular(gsl_matrix *M);
-int largestPivot(gsl_matrix *M, size_t r, size_t c);
-int pivotRow(gsl_matrix *M, size_t r, size_t c);
-
-int gauss(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
-          gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
+int isPositiveDefinite(gsl_matrix *A);
 
 
 

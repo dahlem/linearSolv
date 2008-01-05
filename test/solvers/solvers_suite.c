@@ -12,6 +12,7 @@
 
 #include "subst_test.h"
 #include "gauss_test.h"
+#include "lu_test.h"
 
 
 int main (int argc, char* argv[])
@@ -23,6 +24,7 @@ int main (int argc, char* argv[])
 
     registerSubstTests();
     registerGaussTests();
+    registerLUTests();
     
     /* Run all tests using the CUnit Basic interface */
     CU_basic_set_mode(CU_BRM_VERBOSE);
