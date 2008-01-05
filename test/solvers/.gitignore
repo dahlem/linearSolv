@@ -5,6 +5,9 @@
 /solvers_test-gauss_test.gcda
 /solvers_test-gauss_test.gcno
 /solvers_test-gauss_test.o
+/solvers_test-jacobi_test.gcda
+/solvers_test-jacobi_test.gcno
+/solvers_test-jacobi_test.o
 /solvers_test-lu_test.gcda
 /solvers_test-lu_test.gcno
 /solvers_test-lu_test.o

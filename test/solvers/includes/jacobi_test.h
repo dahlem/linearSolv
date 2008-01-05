@@ -7,33 +7,29 @@
 /* This program is distributed in the hope that it will be useful, but         */
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
-#include <stdio.h>
-#include <CUnit/Basic.h>
 
-#include "gauss_test.h"
-#include "chol_test.h"
-#include "jacobi_test.h"
-#include "lu_test.h"
-#include "subst_test.h"
+#ifndef __JACOBI_TEST_H__
+#define __JACOBI_TEST_H__
 
 
-int main (int argc, char* argv[])
-{
-    /* initialize the CUnit test registry */
-    if (CUE_SUCCESS != CU_initialize_registry()) {
-        return CU_get_error();
-    }
+#include <CUnit/CUnit.h>
 
-    registerSubstTests();
-    registerGaussTests();
-    registerLUTests();
-    registerCholTests();
-    registerJacobiTests();
-    
-    /* Run all tests using the CUnit Basic interface */
-    CU_basic_set_mode(CU_BRM_VERBOSE);
-    CU_basic_run_tests();
-    CU_cleanup_registry();
-   
-    return CU_get_error();
-}
+
+void registerJacobiTests();
+
+
+
+void testJacobi();
+
+
+static CU_TestInfo test_jacobi[] = {
+    { "testJacobi", testJacobi },
+    CU_TEST_INFO_NULL,
+};
+
+static CU_SuiteInfo jacobi_suites[] = {
+    { "TestJacobi", NULL, NULL, test_jacobi },
+    CU_SUITE_INFO_NULL,
+};
+
+#endif
