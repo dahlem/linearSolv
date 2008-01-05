@@ -23,6 +23,7 @@ solvers_test_SOURCES =                                               \
 	seidel_test.c                                                \
 	steepest_test.c                                              \
 	conjugate_test.c                                             \
+	precondition_test.c                                          \
 	subst_test.c
 
 

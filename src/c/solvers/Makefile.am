@@ -19,7 +19,8 @@ libsolvers_la_SOURCES =                                               \
 	jacobi.c                                                      \
 	seidel.c                                                      \
 	steepest.c                                                    \
-	conjugate.c
+	conjugate.c                                                   \
+	precondition.c
 
 libsolvers_la_CPPFLAGS = -I./includes
 

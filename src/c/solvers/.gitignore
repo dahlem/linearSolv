@@ -14,6 +14,9 @@
 /libsolvers_la-lu.gcno
 /libsolvers_la-lu.lo
 /libsolvers_la-lu.o
+/libsolvers_la-precondition.gcno
+/libsolvers_la-precondition.lo
+/libsolvers_la-precondition.o
 /libsolvers_la-seidel.gcno
 /libsolvers_la-seidel.lo
 /libsolvers_la-seidel.o
