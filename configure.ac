@@ -9,7 +9,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 AC_INIT([563 - Assignment 1],
-        [0.2],
+        [0.3],
         [Dominik Dahlem Dominik.Dahlem@cs.tcd.ie], 
         [563_linearsolv])
 
