@@ -23,7 +23,7 @@
 
 function [x_bar, x_error, max_error] = dd_seidel(A, b, x)
   if (nargin != 3)
-    usage("dd_chol(A, b, x)");
+    usage("dd_seidel(A, b, x)");
   endif
 
   if (matrix_type(A) != "Positive Definite")

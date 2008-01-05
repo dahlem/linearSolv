@@ -19,7 +19,8 @@ solvers_test_SOURCES =                                               \
 	gauss_test.c                                                 \
 	lu_test.c                                                    \
 	chol_test.c                                                  \
-	jacobi_test.c                                                  \
+	jacobi_test.c                                                \
+	seidel_test.c                                                \
 	subst_test.c
 
 
