@@ -9,4 +9,4 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-SUBDIRS = io gen solvers
+SUBDIRS = io gen solvers main

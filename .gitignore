@@ -1,5 +1,6 @@
-Makefile
-Makefile.in
+.deps
+.libs
+/autom4te.cache
 /autoscan-2.61.log
 /config.h
 /config.h.in~
@@ -9,7 +10,7 @@ Makefile.in
 /configure.scan
 /coverage
 /libtool
+/output.dat
 /stamp-h1
-/autom4te.cache
-.libs
-.deps
+Makefile
+Makefile.in

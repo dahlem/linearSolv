@@ -9,7 +9,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 AC_INIT([563 - Assignment 1],
-        [0.9],
+        [1.0],
         [Dominik Dahlem Dominik.Dahlem@cs.tcd.ie], 
         [563_linearsolv])
 
@@ -103,6 +103,7 @@ AC_CONFIG_FILES([
    src/c/gen/Makefile
    src/c/io/Makefile
    src/c/solvers/Makefile
+   src/c/main/Makefile
    test/Makefile
    test/gen/Makefile
    test/io/Makefile
