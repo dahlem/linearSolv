@@ -32,33 +32,36 @@
 
 1;
 
-function [A, v] = dd_read(filename, format="-text")
+function [A, v, b] = dd_read(filename, format="-text")
   if ((nargin < 1) || (nargin > 2) || !ischar(filename))
     usage("dd_read(filename[, format='-text'])");
   endif
 
   A = [];
   v = [];
-
-  eval(["load ", format, " ", filename, " ", A, " " , v, ";"]);
+  b = [];
+  
+  eval(["load ", format, " ", filename, " ", A, " " , v, " " , b, ";"]);
 
 endfunction
 
 
-function dd_write(filename, A, v, format="-text")
-  if ((nargin < 3) || (nargin > 4) || !ischar(filename))
-    usage("dd_write(filename, A, v[, format='-text'])");
+function dd_write(filename, A, v, b, format="-text")
+  if ((nargin < 4) || (nargin > 5) || !ischar(filename))
+    usage("dd_write(filename, A, v, b[, format='-text'])");
   endif
 
-  eval(["save (\"", format, "\", \"", filename, "\", \"A\", \"v\")"]);
+  eval(["save (\"", format, "\", \"", filename, "\", \"A\", \"v\", \"b\")"]);
 
 endfunction
 
 %!test
 %! A = [1, 2; 3, 4];
-%! v = [1, 2];
-%! dd_write("test.dat", A, v);
-%! [B, w] = dd_read("test.dat");
+%! v = [1; 2];
+%! b = [1;2];
+%! dd_write("test.dat", A, v, b);
+%! [B, w, c] = dd_read("test.dat");
 %! assert(A == B);
 %! assert(v == w);
+%! assert(b == c);
 %! unlink("test.dat");
