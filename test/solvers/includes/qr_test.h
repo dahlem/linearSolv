@@ -20,10 +20,12 @@ void registerQrTests();
 
 
 void testQr();
+void testEigen();
 
 
 static CU_TestInfo test_qr[] = {
     { "testQr", testQr },
+    { "testEigen", testEigen },
     CU_TEST_INFO_NULL,
 };
 

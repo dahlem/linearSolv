@@ -32,7 +32,7 @@ void testQr()
     gsl_vector *x_bar, *x_error, *temp;
     double max_error;
     size_t i;
-    
+
     double a_array[] = {
         1.86279, 0.47863, -0.54877,
         0.47863, 1.61609, 0.10628,
@@ -42,11 +42,11 @@ void testQr()
     double b_array[] = {
         1, 2, 3
     };
-    
+
     double x_array[] = {
         1, 1, 1
     };
-    
+
     gsl_matrix_view A = gsl_matrix_view_array(a_array, 3, 3);
     gsl_vector_view b = gsl_vector_view_array(b_array, 3);
     gsl_vector_view x = gsl_vector_view_array(x_array, 3);
@@ -67,4 +67,36 @@ void testQr()
     gsl_vector_free(temp);
     gsl_vector_free(x_bar);
     gsl_vector_free(x_error);
+}
+
+
+void testEigen()
+{
+    gsl_vector *e;
+    size_t i;
+
+    double a_array[] = {
+        1.86279, 0.47863, -0.54877,
+        0.47863, 1.61609, 0.10628,
+        -0.54877, 0.10628, 2.76115
+    };
+
+    double e_array[] = {
+        1.1283,
+        2.0812,
+        3.0306
+    };
+
+    gsl_matrix_view A = gsl_matrix_view_array(a_array, 3, 3);
+
+    CU_ASSERT_EQUAL(eigen(&A.matrix, &e, 1e-6), 0);
+
+    for (i = 0; i < e->size; ++i) {
+        CU_ASSERT_DOUBLE_EQUAL(
+            e_array[i],
+            gsl_vector_get(e, i),
+            0.0001);
+    }
+
+    gsl_vector_free(e);
 }

@@ -67,6 +67,28 @@ function [Q, R] = dd_qr_fact(A)
 endfunction
 
 
+function [e] = dd_eigen(A, prec = 0.000001)
+  if (matrix_type(A) != "Positive Definite")
+    error("The matrix A has to be positive definite.");
+  endif
+
+  e = zeros(rows(A), 1);
+  Ak = A;
+
+  do
+    d = diag(Ak);
+    [Q, R] = dd_qr_fact(Ak);
+    Ak = R * Q;
+    error = max(abs(d - diag(Ak)));
+  until (error < prec)
+
+  i = 1;
+  for k = rows(Ak):-1:1
+    e(i++) = Ak(k, k);
+  endfor
+endfunction
+
+
 #!test
 #! A = [1.86279, 0.47863, -0.54877; 0.47863, 1.61609, 0.10628; -0.54877,
 #!      0.10628, 2.76115]

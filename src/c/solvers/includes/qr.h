@@ -28,6 +28,7 @@ int qr_fact(gsl_matrix *A, gsl_matrix **Q, gsl_matrix **R);
 int qr(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
        gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
 
+int eigen(gsl_matrix *A, gsl_vector **e, double prec);
 
 
 #endif
