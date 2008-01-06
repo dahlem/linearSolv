@@ -23,6 +23,19 @@
 #include "error.h"
 
 
+/**
+ * This method solves the linear system with the Conjugate Gradient method.
+ * The vectors x_bar and x_error are allocated within this method and therefore
+ * need to be de-allocated by the client application.
+ *
+ * @param gsl_matrix* the matrix A
+ * @param gsl_vector* the vector b
+ * @param gsl_vector* the vector x
+ * @param gsl_vector** the solution vector x_bar
+ * @param gsl_vector** the error vector x_error
+ * @param double* the maximum error within the solution vector
+ * @return 0, if success. Otherwise the error code.
+ */
 int conjugate(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
               gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
 

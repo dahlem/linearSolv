@@ -17,13 +17,47 @@
 #define __ERROR_H__
 
 
+/**
+ * @defgroup Error codes
+ * @{
+ */
+
+/**
+ * Error code if the matrix is not rectangular
+ */
 #define MATRIX_NOT_RECTANGULAR          11
+
+/**
+ * Error code if the row of a matrix is out of bounds
+ */
 #define ROW_OUT_OF_BOUNDS               12
+
+/**
+ * Error code if the column of a matrix is out of bounds
+ */
 #define COLUMN_OUT_OF_BOUNDS            13
+
+/**
+ * Error code if the matrix-vector dimensions do not match
+ */
 #define MATRIX_VECTOR_UNEQUAL_ROW_DIM   14
+
+/**
+ * Error code if the matrix is not positive definite
+ */
 #define MATRIX_NOT_POS_DEF              15
+
+/**
+ * Error code if the matrix is not square
+ */
 #define MATRIX_NOT_SQUARE               16
+
+/**
+ * Error code if the matrix has linear dependent columns
+ */
 #define MATRIX_LINEAR_DEPENDENT_COLS    17
+
+/** @}*/
 
 
 

@@ -23,7 +23,23 @@
 #include "error.h"
 
 
+/**
+ * Check whether the matrix is positive definite.
+ * 
+ * @param gsl_matrix* the matrix to be checked.
+ * @return 1, if true.
+ */
 int isPositiveDefinite(gsl_matrix *A);
+
+/**
+ * Gather the error statistics. The x_error vector is allocated within this function
+ * and therefore must be de-allocated by the client application.
+ *
+ * @param gsl_vector* the x_bar vector
+ * @param gsl_vector* the x vector
+ * @param gsl_vector** the x_error vector
+ * @param double* the maximum error
+ */
 void gatherErrors(gsl_vector *x_bar, gsl_vector *x, gsl_vector **x_error,
                   double *max_error);
 

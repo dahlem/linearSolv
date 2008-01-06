@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
         gsl_rng_env_setup();
         rng = gsl_rng_alloc(rng_type);
 
-        /* generate a SPD matrix randomly and solve for x[-1,...,-1] */
+        /* generate a SPD matrix randomly and solve for x = [-1,...,-1] */
         linsolv(rng, globalArgs.n, 1.0, &A, &b);
 
         printf("\nGenerated Matrix A:\n");
@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
             printf(" %f\n", gsl_vector_get(b, i));
         }
 
+        /* write x = [-1,...,-1] */
         x = gsl_vector_calloc(b->size);
         gsl_vector_set_all(x, -1.0);
         
