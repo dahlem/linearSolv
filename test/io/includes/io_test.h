@@ -19,7 +19,7 @@ void registerTests();
 
 
 
-void testWriteBoth();
+void testWriteAll();
 void testWriteVector();
 void testWriteMatrix();
 
@@ -27,7 +27,7 @@ void testWriteMatrix();
 static CU_TestInfo test_io[] = {
     { "testWriteVector", testWriteVector },
     { "testWriteMatrix", testWriteMatrix },
-    { "testWriteBoth", testWriteBoth },
+    { "testWriteAll", testWriteAll },
     CU_TEST_INFO_NULL,
 };
 

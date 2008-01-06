@@ -31,48 +31,52 @@ void registerTests()
 void testWriteVector()
 {
     gsl_matrix *mat_read;
-    gsl_vector *vec, *vec_read;
+    gsl_vector *x, *x_read, *b_read;
     char *temp_file;
 
-    vec = gsl_vector_calloc(2);
+    x = gsl_vector_calloc(2);
 
     temp_file = tmpnam(NULL);
     
-    CU_ASSERT_EQUAL(write(temp_file, NULL, vec), 0);
-    CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), ILLEGAL_FORMAT);
+    CU_ASSERT_EQUAL(write(temp_file, NULL, x, NULL), 0);
+    CU_ASSERT_EQUAL(read(temp_file, &mat_read, &x_read, &b_read), ILLEGAL_FORMAT);
 
-    gsl_vector_free(vec);
+    gsl_vector_free(x);
 }
 
 
-void testWriteBoth()
+void testWriteAll()
 {
-    gsl_vector *vec, *vec_read;
+    gsl_vector *x, *x_read, *b, *b_read;
     gsl_matrix *mat, *mat_read;
     char *temp_file;
 
-    vec = gsl_vector_calloc(2);
+    x = gsl_vector_calloc(2);
+    b = gsl_vector_calloc(2);
     mat = gsl_matrix_calloc(2, 3);
 
     temp_file = tmpnam(NULL);
 
-    CU_ASSERT_EQUAL(write(temp_file, mat, vec), 0);
-    CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), 0);
+    CU_ASSERT_EQUAL(write(temp_file, mat, x, b), 0);
+    CU_ASSERT_EQUAL(read(temp_file, &mat_read, &x_read, &b_read), 0);
 
-    CU_ASSERT_EQUAL(vec_read->size, vec->size);
+    CU_ASSERT_EQUAL(x_read->size, x->size);
+    CU_ASSERT_EQUAL(b_read->size, b->size);
     CU_ASSERT_EQUAL(mat_read->size1, mat->size1);
     CU_ASSERT_EQUAL(mat_read->size2, mat->size2);
 
-    gsl_vector_free(vec);
+    gsl_vector_free(x);
+    gsl_vector_free(b);
     gsl_matrix_free(mat);
-    gsl_vector_free(vec_read);
+    gsl_vector_free(x_read);
+    gsl_vector_free(b_read);
     gsl_matrix_free(mat_read);
 }
 
 
 void testWriteMatrix()
 {
-    gsl_vector *vec_read;
+    gsl_vector *x_read, *b_read;
     gsl_matrix *mat, *mat_read;
     char *temp_file;
 
@@ -80,8 +84,8 @@ void testWriteMatrix()
 
     temp_file = tmpnam(NULL);
 
-    CU_ASSERT_EQUAL(write(temp_file, mat, NULL), 0);
-    CU_ASSERT_EQUAL(read(temp_file, &mat_read, &vec_read), ILLEGAL_FORMAT);
+    CU_ASSERT_EQUAL(write(temp_file, mat, NULL, NULL), 0);
+    CU_ASSERT_EQUAL(read(temp_file, &mat_read, &x_read, &b_read), ILLEGAL_FORMAT);
 
     gsl_matrix_free(mat);
 }

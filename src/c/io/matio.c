@@ -42,7 +42,7 @@ int skip(FILE * const file, int num_lines)
 }
 
 
-int write(const char * const filename, gsl_matrix *mat, gsl_vector *vec)
+int write(const char * const filename, gsl_matrix *mat, gsl_vector *x, gsl_vector *b)
 {
     FILE *out;
     char timestamp[128];
@@ -87,14 +87,25 @@ int write(const char * const filename, gsl_matrix *mat, gsl_vector *vec)
         }
     }
 
-    if (vec != NULL) {
+    if (x != NULL) {
         fprintf(out, "# name: v\n");
         fprintf(out, "# type: matrix\n");
-        fprintf(out, "# rows: %d\n", vec->size);
+        fprintf(out, "# rows: %d\n", x->size);
         fprintf(out, "# columns: 1\n");
 
-        for (i = 0; i < vec->size; ++i) {
-            fprintf(out, " %f\n", gsl_vector_get(vec, i));
+        for (i = 0; i < x->size; ++i) {
+            fprintf(out, " %f\n", gsl_vector_get(x, i));
+        }
+    }
+
+    if (b != NULL) {
+        fprintf(out, "# name: b\n");
+        fprintf(out, "# type: matrix\n");
+        fprintf(out, "# rows: %d\n", b->size);
+        fprintf(out, "# columns: 1\n");
+
+        for (i = 0; i < b->size; ++i) {
+            fprintf(out, " %f\n", gsl_vector_get(b, i));
         }
     }
 
@@ -182,7 +193,7 @@ int readMatrix(FILE * const file, gsl_matrix **mat)
 }
 
 
-int read(const char * const filename, gsl_matrix **mat, gsl_vector **vec)
+int read(const char * const filename, gsl_matrix **mat, gsl_vector **x, gsl_vector **b)
 {
     FILE *in;
     int ret, rows, columns;
@@ -217,8 +228,23 @@ int read(const char * const filename, gsl_matrix **mat, gsl_vector **vec)
     }
 
     if ((rows > 0) && (columns == 1)) {
-        *vec = gsl_vector_alloc(rows);
-        readVector(in, vec);
+        *x = gsl_vector_alloc(rows);
+        readVector(in, x);
+    } else {
+        return ILLEGAL_FORMAT;
+    }
+
+    if ((ret = skip(in, 3)) != 0) {
+        return ILLEGAL_FORMAT;
+    }
+
+    if ((ret = read_dim(in, &rows, &columns)) != 0) {
+        return ILLEGAL_FORMAT;
+    }
+
+    if ((rows > 0) && (columns == 1)) {
+        *b = gsl_vector_alloc(rows);
+        readVector(in, b);
     } else {
         return ILLEGAL_FORMAT;
     }

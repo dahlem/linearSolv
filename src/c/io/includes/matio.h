@@ -31,8 +31,8 @@
 #define COL_SPEC "columns:"
 
 
-int read(const char * const filename, gsl_matrix **mat, gsl_vector **vec);
-int write(const char * const filename, gsl_matrix *mat, gsl_vector *vec);
+int read(const char * const filename, gsl_matrix **mat, gsl_vector **x, gsl_vector **b);
+int write(const char * const filename, gsl_matrix *mat, gsl_vector *x, gsl_vector *b);
 
 
 #endif
