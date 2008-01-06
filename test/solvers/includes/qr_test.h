@@ -8,23 +8,28 @@
 /* WITHOUT ANY WARRANTY, to the extent permitted by law; without even the      */
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 
-/**
- * Declaration of the error codes for the linear algebra solvers.
- *
- * @author Dominik Dahlem (ID: 02175321)
- */
-#ifndef __ERROR_H__
-#define __ERROR_H__
+#ifndef __QR_TEST_H__
+#define __QR_TEST_H__
 
 
-#define MATRIX_NOT_RECTANGULAR          11
-#define ROW_OUT_OF_BOUNDS               12
-#define COLUMN_OUT_OF_BOUNDS            13
-#define MATRIX_VECTOR_UNEQUAL_ROW_DIM   14
-#define MATRIX_NOT_POS_DEF              15
-#define MATRIX_NOT_SQUARE               16
-#define MATRIX_LINEAR_DEPENDENT_COLS    17
+#include <CUnit/CUnit.h>
 
 
+void registerQrTests();
+
+
+
+void testQr();
+
+
+static CU_TestInfo test_qr[] = {
+    { "testQr", testQr },
+    CU_TEST_INFO_NULL,
+};
+
+static CU_SuiteInfo qr_suites[] = {
+    { "TestQr", NULL, NULL, test_qr },
+    CU_SUITE_INFO_NULL,
+};
 
 #endif

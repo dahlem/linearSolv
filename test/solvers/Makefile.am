@@ -24,6 +24,7 @@ solvers_test_SOURCES =                                               \
 	steepest_test.c                                              \
 	conjugate_test.c                                             \
 	precondition_test.c                                          \
+	qr_test.c                                                    \
 	subst_test.c
 
 

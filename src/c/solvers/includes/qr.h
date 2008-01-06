@@ -9,21 +9,24 @@
 /* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    */
 
 /**
- * Declaration of the error codes for the linear algebra solvers.
+ * Declaration of the methods for the QR decomposition algorithm.
  *
  * @author Dominik Dahlem (ID: 02175321)
  */
-#ifndef __ERROR_H__
-#define __ERROR_H__
+#ifndef __QR_H__
+#define __QR_H__
 
 
-#define MATRIX_NOT_RECTANGULAR          11
-#define ROW_OUT_OF_BOUNDS               12
-#define COLUMN_OUT_OF_BOUNDS            13
-#define MATRIX_VECTOR_UNEQUAL_ROW_DIM   14
-#define MATRIX_NOT_POS_DEF              15
-#define MATRIX_NOT_SQUARE               16
-#define MATRIX_LINEAR_DEPENDENT_COLS    17
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
+
+#include "error.h"
+
+
+int qr_fact(gsl_matrix *A, gsl_matrix **Q, gsl_matrix **R);
+
+int qr(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
+       gsl_vector **x_bar, gsl_vector **x_error, double *max_error);
 
 
 
