@@ -40,8 +40,8 @@ function [x_bar, x_error, max_error] = dd_conjugate(A, b, x)
   x_bar = x;
   p = b - A * x_bar;
   r = p;
-  alpha = zeros(rows(A), 1);
-  beta = zeros(rows(A), 1);
+  alpha = 0;
+  beta = 0;
   k = 1;
   dp = norm(r)^2;
 

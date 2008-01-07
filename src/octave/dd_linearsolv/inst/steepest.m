@@ -39,7 +39,7 @@ function [x_bar, x_error, max_error] = dd_steepest(A, b, x)
 
   x_bar = x;
   r = b - A * x_bar;
-  alpha = zeros(rows(A), 1);
+  alpha = 0;
   k = 1;
   dp = norm(r)^2;
 
