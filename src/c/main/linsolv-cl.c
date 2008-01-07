@@ -38,6 +38,7 @@ void displayHelp()
     printf("      Method of steepest descent (d);\n");
     printf("      Conjugate Gradient method (u);\n");
     printf("      Jacobi pre-conditioned conjugate gradient method (p).\n");
+    printf("      QR decomposition (q).\n");
     printf(" -e : Calculate the eigenvalues using QR decomposition.\n");
     printf(" -n : The dimension for the randomly generated matrix.\n");
     printf(" -o : Output the generated matrix into a file.\n");
@@ -85,6 +86,8 @@ void verify_cl()
       case 'u':
           break;
       case 'p':
+          break;
+      case 'q':
           break;
       default:
           fprintf(stderr, "Error: Solver %c is not known.\n\n", globalArgs.s);

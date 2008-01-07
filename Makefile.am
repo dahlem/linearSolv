@@ -26,11 +26,15 @@ dist_doc_DATA =                                             \
 	doc
 
 EXTRA_DIST = \
+	$(srcdir)/coverage \
+	$(srcdir)/report \
 	$(srcdir)/m4/ac_gcov.m4 \
-	$(srcdir)/m4/ax_prog_doxygen.m4 \
+	$(srcdir)/m4/ac_gcov.m4 \
 	$(srcdir)/mk/gcov.am \
 	$(srcdir)/mk/gcov-recursive.am \
-	$(srcdir)/mk/doxygen.am
+	$(srcdir)/mk/doxygen.am \
+	$(srcdir)/src/octave \
+	$(srcdir)/test.dat
 
 clean-local:
 	rm -rf doc/doxygen/html

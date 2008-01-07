@@ -75,6 +75,9 @@ int main(int argc, char *argv[])
           case 'p':
               precondition(A, b, x, &x_bar, &x_error, &maxError);
               break;
+          case 'q':
+              qr(A, b, x, &x_bar, &x_error, &maxError);
+              break;
           default:
               fprintf(stderr, "Error: Solver %c is not known.\n\n", globalArgs.s);
               displayHelp();
