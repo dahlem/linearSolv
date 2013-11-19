@@ -1,4 +1,4 @@
-## Copyright (C) 2007 Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>
+## Copyright (C) 2007, 2008 Dominik Dahlem <Dominik.Dahlem@gmail.com>
 ##  
 ## This file is free software; as a special exception the author gives
 ## unlimited permission to copy and/or distribute it, with or without 
@@ -20,9 +20,9 @@
 ## @end deftypefn
 
 
-function [x_bar, x_error, max_error] = dd_conjugate(A, b, x)
-  if (nargin != 3)
-    usage("dd_chol(A, b, x)");
+function [x_bar, x_error, max_error] = dd_conjugate(A, b, x, thresh=e^-12)
+  if (nargin != 4)
+    usage("dd_conjugate(A, b, x, threshold)");
   endif
 
   if (matrix_type(A) != "Positive Definite")
@@ -43,15 +43,17 @@ function [x_bar, x_error, max_error] = dd_conjugate(A, b, x)
   alpha = 0;
   beta = 0;
   k = 1;
-  dp = norm(r)^2;
+  error = dot(r, r);
 
-  while ((k <= rows(A)) && (dp > 1 * e^-12))
-    alpha = dp / (dot(p, A * p));
+  while ((k <= rows(A)) && (error > 1 * thresh))
+    temp = A * p;
+    alpha = error / (dot(p, temp));
     x_bar = x_bar + (alpha * p);
-    r = r - alpha * A * p;
-    beta = norm(r)^2 / dp;
+    r = r - alpha * temp;
+    dotprod = dot(r, r);
+    beta = dotprod / error;
     p = r + beta * p;
-    dp = norm(r)^2;
+    error = dotprod;
     k++;
   endwhile  
   

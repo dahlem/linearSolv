@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Dominik Dahlem <Dominik.Dahlem@cs.tcd.ie>                */
+/* Copyright (C) 2007 Dominik Dahlem <Dominik.Dahlem@gmail.com>                */
 /*                                                                             */
 /* This file is free software; as a special exception the author gives         */
 /* unlimited permission to copy and/or distribute it, with or without          */
@@ -51,7 +51,6 @@ int conjugate(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
         gsl_blas_ddot(p, temp, &dotprod);
         alpha = dp / dotprod;
         gsl_blas_daxpy(alpha, p, *x_bar);
-        gsl_blas_dgemv(CblasNoTrans, 1.0, A, p, 0.0, temp);
         gsl_blas_daxpy(-alpha, temp, r);
         beta = gsl_blas_dnrm2(r) * gsl_blas_dnrm2(r) / dp;
         gsl_vector_memcpy(temp, p);
@@ -62,7 +61,6 @@ int conjugate(gsl_matrix *A, gsl_vector *b, gsl_vector *x,
         k++;
     }
 
-    /* get the error statistics */
     gatherErrors(*x_bar, x, x_error, max_error);
 
     gsl_vector_free(temp);
