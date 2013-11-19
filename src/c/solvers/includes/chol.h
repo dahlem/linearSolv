@@ -12,7 +12,7 @@
  * Declaration of the methods for the Cholesky decomposition with Cholesky-Crout
  * reduction.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __CHOL_H__
 #define __CHOL_H__

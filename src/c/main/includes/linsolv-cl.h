@@ -12,7 +12,7 @@
  * Declaration of some command-line arguments and a <code>struct</code> for
  * the command-line option values.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __LINSOLV_CL_H__
 #define __LINSOLV_CL_H__

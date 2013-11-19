@@ -11,7 +11,7 @@
 /**
  * Declaration of utility methods.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __UTIL_H__
 #define __UTIL_H__

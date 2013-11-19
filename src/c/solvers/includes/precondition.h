@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the jacobi preconditioned conjugate gradient algorithm.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __PRECONDITION_H__
 #define __PRECONDITION_H__

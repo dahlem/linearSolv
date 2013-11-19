@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the Conjugate gradient algorithm.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __CONJUGATE_H__
 #define __CONJUGATE_H__

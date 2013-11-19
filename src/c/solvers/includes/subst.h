@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for forwards/backwards substitution.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __SUBST_H__
 #define __SUBST_H__

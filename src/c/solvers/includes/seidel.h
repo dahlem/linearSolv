@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the Seidel iteration.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __SEIDEL_H__
 #define __SEIDEL_H__

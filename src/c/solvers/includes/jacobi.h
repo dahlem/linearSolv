@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the Jacobi iteration.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __JACOBI_H__
 #define __JACOBI_H__

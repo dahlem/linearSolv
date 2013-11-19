@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for gaussian elimination.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __GAUSS_H__
 #define __GAUSS_H__

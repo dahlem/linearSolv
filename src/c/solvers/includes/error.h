@@ -11,7 +11,7 @@
 /**
  * Declaration of the error codes for the linear algebra solvers.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __ERROR_H__
 #define __ERROR_H__

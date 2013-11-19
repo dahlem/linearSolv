@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the LU decomposition with crout reduction.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __LU_H__
 #define __LU_H__

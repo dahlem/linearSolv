@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the QR decomposition algorithm.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __QR_H__
 #define __QR_H__

@@ -11,7 +11,7 @@
 /**
  * Declaration of the methods for the Steepest descent algorithm.
  *
- * @author Dominik Dahlem (ID: 02175321)
+ * @author Dominik Dahlem 
  */
 #ifndef __STEEPEST_H__
 #define __STEEPEST_H__
