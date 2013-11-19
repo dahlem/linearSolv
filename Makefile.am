@@ -7,7 +7,7 @@
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-ACLOCAL_AMFLAGS = -I m4 -I /usr/share/aclocal
+#ACLOCAL_AMFLAGS = -I m4 -I /usr/share/aclocal
 
 include mk/doxygen.am
 
@@ -28,7 +28,6 @@ dist_doc_DATA =                                             \
 EXTRA_DIST = \
 	$(srcdir)/coverage \
 	$(srcdir)/report \
-	$(srcdir)/m4/ac_gcov.m4 \
 	$(srcdir)/m4/ac_gcov.m4 \
 	$(srcdir)/mk/gcov.am \
 	$(srcdir)/mk/gcov-recursive.am \
